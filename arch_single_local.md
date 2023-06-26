@@ -159,7 +159,6 @@ node:
 ## Running the Ansible Playbook
 
 ### 1. Prepare the inventory file
-
 Update the `local.yml` file in the inventory file to match your infrastructure settings. Please note that you may also need to update the `ansible_user` if different from root.
 
 ### 2. Check the connection
