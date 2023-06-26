@@ -9,6 +9,7 @@ The documentation is organized based on four distinct architectures. We will sta
 * Ansible version >= 2.14.0
 * SSH access to the inventory servers, either directly or through a bastion host
 * User used to connect to the servers can sudo into root
+* Servers need to be configured to use either Netplan or NetworkManager
 
 ## How to use the OpenNebula Ansible Playbooks
 
