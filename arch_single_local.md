@@ -167,14 +167,8 @@ To verify the network connection, ssh and sudo configuration run the following c
 ```shell
 ansible -i inventory/local.yml all -m ping -b
 ```
-### 3. Site pre-configuration 
-Run the pre configuration playbook that verifies the runtime dependencies in all hosts:
-
-```shell
-ansible-playbook -i inventory/local.yml opennebula.deploy.pre
-```
-### 4. Site installation
+### 3. Site installation
 Now we can run the site playbook that install and configure OpenNebula services
 ```shell
-ansible-playbook -i inventory/local.yml opennebula.deploy.site
+ansible-playbook -i inventory/local.yml opennebula.deploy.main
 ```
