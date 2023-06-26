@@ -13,7 +13,7 @@ ds:
   mode: ssh
 ```
 
-**Note**: If you want to use a dedicated volume for all your datastores, you can pre-mount it in `/var/lib/one/datastores/`.
+:warning: **Note**: If you want to use a dedicated volume for all your datastores, you can pre-mount it in `/var/lib/one/datastores/`.
 
 If you want to use a dedicated volume mounted in a custom location (for example `/mnt/one_datastores/`), then you need to pre-create directories (owned by `oneadmin`) for each datastore and use the following snippet which will cause symlinks to be created automatically:
 
@@ -51,6 +51,8 @@ $ tree /var/lib/one/datastore/
 The most basic network configuration is a flat network (bridged). We will use the main interface of the Host to connect the VMs to the Network. The interfaces used in this mode are depicted in the following picture:
 
 [[images/arch_net.png|Networking for the hypervisor hosts]]
+
+:warning: **Note**: The playbook will make this configuration persistent if Netplan or NetworkManager is present in the Hosts
 
 To create the virtual network for the VMs you need to pick up some IP. These IP addresses need to be reachable through the Network used by the main interface of the host, as the VM traffic will be forwarded through it.
 
