@@ -52,7 +52,7 @@ The most basic network configuration is a flat network (bridged). We will use th
 
 [[images/arch_net.png|Networking for the hypervisor hosts]]
 
-:warning: **Note**: The playbook will make this configuration persistent if Netplan or NetworkManager is present in the Hosts
+:warning: **Note**: The playbook requires either Netplan or NetworkManager to be present in the Hosts to perform the initial configuration.
 
 To create the virtual network for the VMs you need to pick up some IP. These IP addresses need to be reachable through the Network used by the main interface of the host, as the VM traffic will be forwarded through it.
 
