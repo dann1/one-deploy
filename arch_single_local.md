@@ -104,7 +104,7 @@ If there is any other interface in the hosts you can use them. For example to de
 The Ansible playbook installs a complete suite of OpenNebula services including the base daemons (oned and scheduler), the OpenNebula Flow and Gate services and Sunstone Web-UI. You can just need to select the OpenNebula version to install and a pick a password for oneadmin
 
 ```yaml
-one_pswd: opennebula
+one_pass: opennebula
 one_version: '6.6'
 ```
 
@@ -117,7 +117,9 @@ features:
   prometheus: true
 ```
 
-## The complete example file
+## The complete inventory file
+
+The following file show the complete settings to install a single front-end with two hosts using local storage:
 
 ```yaml
 ---
@@ -135,25 +137,90 @@ all:
             BRIDGE: br0
             AR:
               TYPE: IP4
-              IP: 10.0.0.50
+              IP: 172.20.0.100
               SIZE: 48
-            NETWORK_ADDRESS: 10.0.0.0
+            NETWORK_ADDRESS: 172.20.0.0
             NETWORK_MASK: 255.255.255.0
-            GATEWAY: 10.0.0.1
+            GATEWAY: 172.20.0.1
             DNS: 1.1.1.1
 
 frontend:
   hosts:
-    f1: { ansible_host: 10.11.12.10 }
-    f2: { ansible_host: 10.11.12.20 }
-    f3: { ansible_host: 10.11.12.30 }
+    f1: { ansible_host: 172.20.0.7, ansible_user: root}
 
 node:
   hosts:
-    n1: { ansible_host: 10.11.12.40 }
-    n2: { ansible_host: 10.11.12.50 }
-
-grafana:
-  hosts:
-    f1: { ansible_host: 10.11.12.10 }
+    n1: { ansible_host: 172.20.0.8, ansible_user: root }
+    n2: { ansible_host: 172.20.0.9, ansible_user: root }
 ```
+
+## Running the Ansible Playbook
+
+1. Update the `local.yml` file in the inventory file to match your infrastructure settings. Please note that you may also need to update the `ansible_user` if different from root.
+2. Check the connection to the host:
+```shell
+$ ansible -i inventory/local.yml all -m ping -b
+f1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+n1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+n2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+3. Run the pre configuration playbook that verifies runtime dependencies
+```shell
+ansible-playbook -i inventory/local.yml opennebula.deploy.pre
+[WARNING]: running playbook inside collection opennebula.deploy
+[WARNING]: Could not match supplied host pattern, ignoring: bastion
+
+PLAY [bastion] **************************************************************************************************
+skipping: no hosts matched
+
+PLAY [frontend:node] ********************************************************************************************
+
+TASK [opennebula.deploy.helper/python3 : Bootstrap python3 intepreter] ******************************************
+skipping: [f1]
+skipping: [n2]
+skipping: [n1]
+
+PLAY [frontend:node] ********************************************************************************************
+
+TASK [opennebula.deploy.helper/facts : Collect facts] ***********************************************************
+ok: [n1]
+ok: [f1]
+ok: [n2]
+
+...
+PLAY RECAP ******************************************************************************************************
+f1                         : ok=6    changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+n1                         : ok=3    changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+n2                         : ok=3    changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+```
+4. Now we run the site playbook that install and configure OpenNebula services
+```
+ ansible-playbook -i inventory/local.yml opennebula.deploy.site
+[WARNING]: running playbook inside collection opennebula.deploy
+
+PLAY [frontend] *************************************************************************************************
+
+TASK [opennebula.deploy.helper/facts : Collect facts] ***********************************************************
+ok: [f1]
+
+TASK [opennebula.deploy.repository : Check if OpenNebula GPG keys are installed] ********************************
+ok: [f1] => (item={'name': 'opennebula2', 'url': 'https://downloads.opennebula.io/repo/repo2.key'})
+...
