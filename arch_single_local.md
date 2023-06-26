@@ -127,6 +127,7 @@ The following file show the complete settings to install a single front-end with
 ---
 all:
   vars:
+    ansible_user: root
     one_version: '6.6'
     one_pass: opennebulapass
     vn:
@@ -148,17 +149,20 @@ all:
 
 frontend:
   hosts:
-    f1: { ansible_host: 172.20.0.7, ansible_user: root}
+    fe1: { ansible_host: 172.20.0.7 }
 
 node:
   hosts:
-    n1: { ansible_host: 172.20.0.8, ansible_user: root }
-    n2: { ansible_host: 172.20.0.9, ansible_user: root }
+    node1: { ansible_host: 172.20.0.8 }
+    node2: { ansible_host: 172.20.0.9 }
 ```
 
 ## Running the Ansible Playbook
 
-* **1. Prepare the inventory file**: Update the `local.yml` file in the inventory file to match your infrastructure settings. Please note that you may also need to update the `ansible_user` if different from root.
+* **1. Prepare the inventory file**: Update the `local.yml` file in the inventory file to match your infrastructure settings. Please be sure to update or review the following variables:
+  - `ansible_user`, update it if different from root.
+  - `one_pass`, change it to the password for the oneadmin account
+  - `one_version`, be sure to use the latest stable version here
 
 * **2. Check the connection**: Verify the network connection, ssh and sudo configuration run the following command:
 ```shell
@@ -167,4 +171,35 @@ ansible -i inventory/local.yml all -m ping -b
 * **3. Site installation**: Now we can run the site playbook that install and configure OpenNebula services
 ```shell
 ansible-playbook -i inventory/local.yml opennebula.deploy.main
+```
+
+## Verifying the Installation
+
+Now that the OpenNebula cloud is installed and ready to use let's review your installation. Let's first check the hosts, ssh into the frontend and check the hosts registered in OpenNebula:
+
+```shell
+# sudo -i -u oneadmin
+$ onehost list
+
+```
+
+In the same way you can check the datastores and virtual networks
+```shell
+$ onedatastore list
+
+$ onevnet list
+
+```
+
+Finally let's create a simple VM. Let's download an alpine image from the OpenNebula MarketPlace:
+
+```shell
+$ onemarketapp export
+
+```
+
+And instantiate the template attached to the `admin_net` network:
+```shell
+$ onetemplate instantiate 
+
 ```
