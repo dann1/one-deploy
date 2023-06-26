@@ -178,28 +178,74 @@ ansible-playbook -i inventory/local.yml opennebula.deploy.main
 Now that the OpenNebula cloud is installed and ready to use let's review your installation. Let's first check the hosts, ssh into the frontend and check the hosts registered in OpenNebula:
 
 ```shell
-# sudo -i -u oneadmin
-$ onehost list
+root@ubuntu2204-14:~# sudo -i -u oneadmin
+oneadmin@ubuntu2204-14:~$ onehost list
+  ID NAME                                               CLUSTER    TVM      ALLOCATED_CPU      ALLOCATED_MEM STAT
+   1 172.20.0.9                                         default      0       0 / 100 (0%)     0K / 1.4G (0%) on
+   0 172.20.0.8                                         default      0       0 / 100 (0%)     0K / 1.4G (0%) on
 
 ```
 
-In the same way you can check the datastores and virtual networks
+In the same way you can check the datastores:
 ```shell
-$ onedatastore list
+oneadmin@ubuntu2204-14:~$ onedatastore list
+  ID NAME                                                      SIZE AVA CLUSTERS IMAGES TYPE DS      TM      STAT
+   2 files                                                    19.2G 84% 0             0 fil  fs      ssh     on
+   1 default                                                  19.2G 84% 0             0 img  fs      ssh     on
+   0 system                                                       - -   0             0 sys  -       ssh     on
+```
+Note that all datastores are using ssh drivers.
 
-$ onevnet list
-
+and virtual networks:
+```shell
+oneadmin@ubuntu2204-14:~$ onevnet list
+  ID USER     GROUP    NAME                            CLUSTERS   BRIDGE            STATE        LEASES OUTD ERRO
+   0 oneadmin oneadmin service                         0          br0               rdy               0    0    0
 ```
 
 Finally let's create a simple VM. Let's download an alpine image from the OpenNebula MarketPlace:
 
-```shell
-$ onemarketapp export
+:warning: **Note**: This require a Internet access to be properly configured
 
+```shell
+oneadmin@ubuntu2204-14:~$ onemarketapp export -d default 'Alpine Linux 3.17' alpine
+IMAGE
+    ID: 0
+VMTEMPLATE
+    ID: 0
 ```
 
-And instantiate the template attached to the `admin_net` network:
+wait for the alpine image to be in ready state, time will vary depending on your Internet connection speed:
 ```shell
-$ onetemplate instantiate 
-
+oneadmin@ubuntu2204-14:~$ oneimage list
+  ID USER     GROUP    NAME                                                 DATASTORE     SIZE TYPE PER STAT RVMS
+   0 oneadmin oneadmin alpine                                               default       256M OS    No rdy     0
 ```
+
+And instantiate the template attached to the `service` network:
+```shell
+onetemplate instantiate --nic service alpine
+ID: 0
+```
+
+Watch VM is running:
+```shell
+onevm list
+  ID USER     GROUP    NAME                                 STAT  CPU     MEM HOST                           TIME
+   0 oneadmin oneadmin alpine-0                             runn    1    128M 172.20.0.9                 0d 01h50
+```
+and verify networking. The VM will be using the first IP in the range, 172.20.0.100 in our example:
+```shell
+oneadmin@ubuntu2204-14:~$ ping -c 2 172.20.100
+PING 172.20.100 (172.20.0.100) 56(84) bytes of data.
+64 bytes from 172.20.0.100: icmp_seq=1 ttl=64 time=1.07 ms
+64 bytes from 172.20.0.100: icmp_seq=2 ttl=64 time=1.13 ms
+
+--- 172.20.100 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 1.069/1.098/1.128/0.029 ms
+```
+
+Finally you can use the Suntone web interface by pointing your browser to the front-end IP and port 9869 (`http://172.20.0.7:9869`). After login using the oneadmin account and password you will see the main dashboard:
+
+[[images/sunstone.png|Sunstone main dashboard]]
