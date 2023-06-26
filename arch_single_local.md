@@ -156,71 +156,23 @@ node:
 
 ## Running the Ansible Playbook
 
-1. Update the `local.yml` file in the inventory file to match your infrastructure settings. Please note that you may also need to update the `ansible_user` if different from root.
-2. Check the connection to the host:
+### 1. Prepare the Inventory File
+
+Update the `local.yml` file in the inventory file to match your infrastructure settings. Please note that you may also need to update the `ansible_user` if different from root.
+
+### 2. Check the connection
+To verify the network connection, ssh and sudo configuration run the following command:
 ```shell
 $ ansible -i inventory/local.yml all -m ping -b
-f1 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-n1 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
-n2 | SUCCESS => {
-    "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
-    },
-    "changed": false,
-    "ping": "pong"
-}
 ```
-3. Run the pre configuration playbook that verifies runtime dependencies
+### 3. Site Pre-configuration 
+Run the pre configuration playbook that verifies the runtime dependencies in all hosts:
+
 ```shell
 ansible-playbook -i inventory/local.yml opennebula.deploy.pre
-[WARNING]: running playbook inside collection opennebula.deploy
-[WARNING]: Could not match supplied host pattern, ignoring: bastion
-
-PLAY [bastion] **************************************************************************************************
-skipping: no hosts matched
-
-PLAY [frontend:node] ********************************************************************************************
-
-TASK [opennebula.deploy.helper/python3 : Bootstrap python3 intepreter] ******************************************
-skipping: [f1]
-skipping: [n2]
-skipping: [n1]
-
-PLAY [frontend:node] ********************************************************************************************
-
-TASK [opennebula.deploy.helper/facts : Collect facts] ***********************************************************
-ok: [n1]
-ok: [f1]
-ok: [n2]
-
-...
-PLAY RECAP ******************************************************************************************************
-f1                         : ok=6    changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
-n1                         : ok=3    changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
-n2                         : ok=3    changed=0    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
 ```
-4. Now we run the site playbook that install and configure OpenNebula services
+### 4. Site Installation
+Now we can run the site playbook that install and configure OpenNebula services
+```shell
+$ ansible-playbook -i inventory/local.yml opennebula.deploy.site
 ```
- ansible-playbook -i inventory/local.yml opennebula.deploy.site
-[WARNING]: running playbook inside collection opennebula.deploy
-
-PLAY [frontend] *************************************************************************************************
-
-TASK [opennebula.deploy.helper/facts : Collect facts] ***********************************************************
-ok: [f1]
-
-TASK [opennebula.deploy.repository : Check if OpenNebula GPG keys are installed] ********************************
-ok: [f1] => (item={'name': 'opennebula2', 'url': 'https://downloads.opennebula.io/repo/repo2.key'})
-...
