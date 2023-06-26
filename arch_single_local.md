@@ -197,7 +197,7 @@ and virtual networks:
 ```shell
 oneadmin@ubuntu2204-14:~$ onevnet list
   ID USER     GROUP    NAME                            CLUSTERS   BRIDGE            STATE        LEASES OUTD ERRO
-   0 oneadmin oneadmin service                         0          br0               rdy               0    0    0
+   0 oneadmin oneadmin admin_net                       0          br0               rdy               0    0    0
 ```
 
 Finally let's create a simple VM. Let's download an alpine image from the OpenNebula MarketPlace:
@@ -219,9 +219,9 @@ oneadmin@ubuntu2204-14:~$ oneimage list
    0 oneadmin oneadmin alpine                                               default       256M OS    No rdy     0
 ```
 
-And instantiate the template attached to the `service` network:
+And instantiate the template attached to the `admin_net` network:
 ```shell
-onetemplate instantiate --nic service alpine
+onetemplate instantiate --nic admin_net alpine
 ID: 0
 ```
 
