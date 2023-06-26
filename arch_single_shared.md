@@ -1,7 +1,37 @@
 # Single Front-end & Shared Storage
 
-This scenario is a variant of the 
+This scenario is a variation of the [local storage](arch_single_local) setup. Here, the storage for virtual machines (VMs) and the image repository are provided by a NFS/NAS server. Running VMs directly from shared storage can enhance the fault tolerance of the system in the event of a host failure, although it comes with the drawback of increased I/O latency.
+
+:warning: **Note**: The playbook assumes that you have already configured and mounted the NFS shares in all the servers.
+
 ## Storage
+
+The NFS/NAS server is configured to export the datastore folders to the hosts in the OpenNebula cloud. In this example we assume that the following structure is created in the NFS/NAS sever:
+
+```shell
+ls -ln /srv
+total 0
+drwxr-xr-x 2 9869 9689 6 Jun 26 17:55 0
+drwxr-xr-x 2 9869 9689 6 Jun 26 17:55 1
+drwxr-xr-x 2 9869 9689 6 Jun 26 17:55 2
+```
+
+and exported to the OpenNebula servers, for example:
+
+```shell
+$ cat /etc/exports
+# /etc/exports
+#
+# See exports(5) for more information.
+#
+# Use exportfs -r to reread
+# /export	192.168.1.10(rw,no_root_squash)
+/srv 172.20.0.0/24(rw,soft,intr,async,rsize=32768, wsize=32768)
+```
+
+
+
+
 Virtual disk images are stored in local storage, with the front-end hosting an image repository (image datastore). These images are subsequently transferred from the front-end to the hypervisors to initiate the virtual machines (VMs). Both the front-end and hypervisors utilize the directory `/var/lib/one/datastores` to store these images. It is possible to either utilize the root file system (FS) for this directory or symlink from any other location.
 
 
