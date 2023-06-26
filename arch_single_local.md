@@ -156,7 +156,7 @@ node:
 
 ## Running the Ansible Playbook
 
-### 1. Prepare the Inventory File
+### 1. Prepare the inventory file
 
 Update the `local.yml` file in the inventory file to match your infrastructure settings. Please note that you may also need to update the `ansible_user` if different from root.
 
@@ -165,13 +165,13 @@ To verify the network connection, ssh and sudo configuration run the following c
 ```shell
 $ ansible -i inventory/local.yml all -m ping -b
 ```
-### 3. Site Pre-configuration 
+### 3. Site pre-configuration 
 Run the pre configuration playbook that verifies the runtime dependencies in all hosts:
 
 ```shell
 ansible-playbook -i inventory/local.yml opennebula.deploy.pre
 ```
-### 4. Site Installation
+### 4. Site installation
 Now we can run the site playbook that install and configure OpenNebula services
 ```shell
 $ ansible-playbook -i inventory/local.yml opennebula.deploy.site
