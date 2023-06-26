@@ -59,46 +59,44 @@ To create the virtual network for the VMs you need to pick up some IP. These IP 
 The following snippet shows how to define a virtual network using some IPs in the Admin Network (the one used by the hosts):
 
 ```yaml
- vn:
-      bridge:
-        admin_net:
-          managed: true
-          template:
-            VN_MAD: bridge
-            PHYDEV: eth0
-            BRIDGE: br0
-            AR:
-              TYPE: IP4
-              IP: 10.0.0.50
-              SIZE: 48
-            NETWORK_ADDRESS: 10.0.0.0
-            NETWORK_MASK: 255.255.255.0
-            GATEWAY: 10.0.0.1
-            DNS: 1.1.1.1
+    vn:
+      admin_net:
+        managed: true
+        template:
+          VN_MAD: bridge
+          PHYDEV: eth0
+          BRIDGE: br0
+          AR:
+            TYPE: IP4
+            IP: 10.0.0.50
+            SIZE: 48
+          NETWORK_ADDRESS: 10.0.0.0
+          NETWORK_MASK: 255.255.255.0
+          GATEWAY: 10.0.0.1
+          DNS: 1.1.1.1
 ```
 
 If there is any other interface in the hosts you can use them. For example to define a dedicated VM network using bon0 and vxlan networking:
 
 ```yaml
-     vxlan:
-        vms_net:
-          managed: true
-          template:
-            VN_MAD: vxlan
-            PHYDEV: bond0
-            BRIDGE: br1
-            VLAN_ID: 123
-            FILTER_IP_SPOOFING: 'NO'
-            FILTER_MAC_SPOOFING: 'YES'
-            GUEST_MTU: 1450
-            AR:
-              TYPE: IP4
-              IP: 192.168.0.10
-              SIZE: 100
-            NETWORK_ADDRESS: 192.168.0.0
-            NETWORK_MASK: 255.255.255.0
-            GATEWAY: 192.168.0.1
-            DNS: 192.168.0.1
+      vms_net:
+        managed: true
+        template:
+          VN_MAD: vxlan
+          PHYDEV: bond0
+          BRIDGE: br1
+          VLAN_ID: 123
+          FILTER_IP_SPOOFING: 'NO'
+          FILTER_MAC_SPOOFING: 'YES'
+          GUEST_MTU: 1450
+          AR:
+            TYPE: IP4
+            IP: 192.168.0.10
+            SIZE: 100
+          NETWORK_ADDRESS: 192.168.0.0
+          NETWORK_MASK: 255.255.255.0
+          GATEWAY: 192.168.0.1
+          DNS: 192.168.0.1
 ```
 
 ## OpenNebula Front-end & Services
@@ -132,20 +130,19 @@ all:
     one_pass: opennebulapass
     vn:
       admin_net:
-        service:
-          managed: true
-          template:
-            VN_MAD: bridge
-            PHYDEV: eth0
-            BRIDGE: br0
-            AR:
-              TYPE: IP4
-              IP: 172.20.0.100
-              SIZE: 48
-            NETWORK_ADDRESS: 172.20.0.0
-            NETWORK_MASK: 255.255.255.0
-            GATEWAY: 172.20.0.1
-            DNS: 1.1.1.1
+        managed: true
+        template:
+          VN_MAD: bridge
+          PHYDEV: eth0
+          BRIDGE: br0
+          AR:
+            TYPE: IP4
+            IP: 172.20.0.100
+            SIZE: 48
+          NETWORK_ADDRESS: 172.20.0.0
+          NETWORK_MASK: 255.255.255.0
+          GATEWAY: 172.20.0.1
+          DNS: 1.1.1.1
 
 frontend:
   hosts:
