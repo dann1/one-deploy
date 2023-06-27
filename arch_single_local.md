@@ -49,7 +49,7 @@ $ tree /var/lib/one/datastore/
 └── 2 -> /mnt/one_datastores/files/
 ```
 
-[## Networking](#arch_single_network)
+## [Networking](#arch_single_network)
 
 The most basic network configuration is a flat network (bridged). We will use the main interface of the Host to connect the VMs to the Network. The interfaces used in this mode are depicted in the following picture:
 
