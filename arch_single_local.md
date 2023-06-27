@@ -50,7 +50,7 @@ $ tree /var/lib/one/datastore/
 
 The most basic network configuration is a flat network (bridged). We will use the main interface of the Host to connect the VMs to the Network. The interfaces used in this mode are depicted in the following picture:
 
-[[images/arch_net.jpg|Networking for the hypervisor hosts]]
+[[/images/arch_net.jpg|Networking for the hypervisor hosts]]
 
 :warning: **Note**: The playbook requires either Netplan or NetworkManager to be present in the Hosts to perform the initial configuration.
 
