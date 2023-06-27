@@ -34,7 +34,7 @@ This folder is exported to the OpenNebula servers, for example:
 #
 # Use exportfs -r to reread
 # /export	192.168.1.10(rw,no_root_squash)
-/srv 172.20.0.0/24(rw,soft,intr,async,rsize=32768, wsize=32768)
+/srv 172.20.0.0/24(rw,soft,intr,async)
 ```
 ### NFS client configuration
 
