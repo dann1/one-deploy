@@ -36,6 +36,14 @@ This folder is exported to the OpenNebula servers, for example:
 # /export	192.168.1.10(rw,no_root_squash)
 /srv 172.20.0.0/24(rw,soft,intr,async)
 ```
+**After running the playbook** you will see the following set up in the front-end:
+```
+root@ubuntu2204-17:~# ls -l /var/lib/one/datastores/
+total 4
+lrwxrwxrwx 1 root     root        7 Jun 27 11:12 1 -> /mnt/1/
+drwxr-xr-x 2 oneadmin oneadmin 4096 Jun 27 11:09 2
+```
+
 ### NFS client configuration
 
 In this example all servers (front-end and hosts) mounts the NFS shared under the `/mnt` folder:
@@ -48,6 +56,15 @@ drwxr-xr-x  2 9869 9689    6 Jun 26 15:55 0
 drwxr-xr-x  2 9869 9689    6 Jun 26 15:55 1
 drwxr-xr-x  2 9869 9689    6 Jun 26 15:55 2
 ```
+
+**After running the playbook** you will see the following set up in the hosts:
+```
+root@ubuntu2204-18:~# ls -l /var/lib/one/datastores/
+total 0
+lrwxrwxrwx 1 root root 7 Jun 27 11:10 0 -> /mnt/0/
+lrwxrwxrwx 1 root root 7 Jun 27 11:10 1 -> /mnt/1/
+```
+
 ### Inventory
 
 The following snippet shows the configuration required to use the `shared` storage using the above mount points:
