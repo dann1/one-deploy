@@ -39,7 +39,7 @@ grafana:
     n1a1: { ansible_host: n1a1 }
 ```
 
-The `bastion` group should contain a single host accessible from you Ansible controller. This host can for example be one of the Frontends or something completely from outside of the cluster.
+The `bastion` group should contain a single host accessible from your Ansible controller. This host can for example be one of the Frontends or something completely from outside of the cluster.
 
 ## SSH configs
 
