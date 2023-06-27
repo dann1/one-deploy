@@ -63,9 +63,9 @@ $ ansible-playbook -i inventory/example.yml opennebula.deploy.main -t bastion,pr
 
 ## Ansible Galaxy Collection
 
-For more advance users, the playbooks are available as part of the [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula/cloud), just take a look at the documentation of each role in the OpenNebula collection to include them in your own playbooks.
+For more advance users, the playbooks are available as part of the [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula), just take a look at the documentation of each role in the OpenNebula collection to include them in your own playbooks.
 
-To install the `opennebula.deploy` collection directly from [Ansible Galaxy](https://galaxy.ansible.com/opennebula) execute:
+To install the `opennebula.deploy` collection directly from [Ansible Galaxy](https://galaxy.ansible.com/opennebula/deploy) execute:
 
 ```shell
 $ ansible-galaxy collection install --upgrade opennebula.deploy
