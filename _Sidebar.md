@@ -1,4 +1,5 @@
 **[Home](Home)**
+* [Requirements & Platform Notes](sys_reqs)
 * [Using the playbooks](sys_use)
 * Deployments
   * [Local storage](arch_single_local)
