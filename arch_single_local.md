@@ -173,3 +173,4 @@ ansible -i inventory/local.yml all -m ping -b
 ```shell
 ansible-playbook -i inventory/local.yml opennebula.deploy.main
 ```
+Once the execution of the playbook finish your new OpenNebula cloud is ready. [You can now head to the verification guide](sys_verify)" guide.
