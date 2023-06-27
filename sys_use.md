@@ -145,3 +145,21 @@ EOF
 
 $ (cd ~/my-one/ && ansible-playbook -v keys.yml)
 ```
+
+## Available tags
+
+| Tag          | Description                                            |
+|--------------|--------------------------------------------------------|
+| `bastion`    | Render local SSH jump-host configs                     |
+| `datastore`  | Manage datastores                                      |
+| `flow`       | Manage the OneFlow service                             |
+| `frontend`   | Run all tasks needed for Front-end deployment          |
+| `gate`       | Manage OneGate Server and Proxy services               |
+| `grafana`    | Manage Grafana                                         |
+| `gui`        | Manage Sunstone and FireEdge services                  |
+| `keys`       | Generate and provision SSH keys (password-less login)  |
+| `libvirt`    | Apply various Libvirt-related fixes on OpeNebula Nodes |
+| `network`    | Manage networking                                      |
+| `node`       | Run all tasks needed for Node deployment               |
+| `preinstall` | Download and install (only) all software packages      |
+| `prometheus` | Manage Prometheus Server and exporters                 |
