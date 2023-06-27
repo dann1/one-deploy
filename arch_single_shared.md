@@ -85,31 +85,39 @@ all:
     ansible_user: root
     one_version: '6.6'
     one_pass: opennebulapass
+    ds:
+      mode: shared
+      mounts:
+      - type: system
+        path: /mnt/0
+      - type: image
+        path: /mnt/1
+      - type: files
+        path: /mnt/2
     vn:
       admin_net:
-        service:
-          managed: true
-          template:
-            VN_MAD: bridge
-            PHYDEV: eth0
-            BRIDGE: br0
-            AR:
-              TYPE: IP4
-              IP: 172.20.0.100
-              SIZE: 48
-            NETWORK_ADDRESS: 172.20.0.0
-            NETWORK_MASK: 255.255.255.0
-            GATEWAY: 172.20.0.1
-            DNS: 1.1.1.1
+        managed: true
+        template:
+          VN_MAD: bridge
+          PHYDEV: eth0
+          BRIDGE: br0
+          AR:
+            TYPE: IP4
+            IP: 172.20.0.100
+            SIZE: 48
+          NETWORK_ADDRESS: 172.20.0.0
+          NETWORK_MASK: 255.255.255.0
+          GATEWAY: 172.20.0.1
+          DNS: 1.1.1.1
 
 frontend:
   hosts:
-    fe1: { ansible_host: 172.20.0.7 }
+    f1: { ansible_host: 172.20.0.6 }
 
 node:
   hosts:
-    node1: { ansible_host: 172.20.0.8 }
-    node2: { ansible_host: 172.20.0.9 }
+    n1: { ansible_host: 172.20.0.7 }
+    n2: { ansible_host: 172.20.0.8 }
 ```
 
 ## Running the Ansible Playbook
