@@ -131,6 +131,8 @@ all:
     ansible_user: root
     one_version: '6.6'
     one_pass: opennebulapass
+    ds:
+      mode: ssh
     vn:
       admin_net:
         managed: true
