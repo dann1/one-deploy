@@ -3,7 +3,7 @@
 In this scenario we will have a single front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let’s us review some the main components.
 
 <p align="center">
-<img src="images/arch_local.jpg" width="60%">
+<img src="images/arch_local.png" width="60%">
 </p>
 
 ## Storage
@@ -54,7 +54,7 @@ $ tree /var/lib/one/datastore/
 
 The most basic network configuration is a flat network (bridged). We will use the main interface of the Host to connect the VMs to the Network. The interfaces used in this mode are depicted in the following picture:
 
-<img src="images/arch_net.jpg" width="60%" align="right">
+<img src="images/arch_net.png" width="60%" align="right">
 
 :warning: **Note**: The playbook requires either Netplan or NetworkManager to be present in the Hosts to perform the initial configuration.
 
