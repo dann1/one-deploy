@@ -68,24 +68,11 @@ ds:
 
 ## Networking
 
-To [configure the networking](arch_single_local#networking)
+To [configure the network you can follow the local storage scenario section.](arch_single_local#networking)
+
 ## OpenNebula Front-end & Services
 
-The Ansible playbook installs a complete suite of OpenNebula services including the base daemons (oned and scheduler), the OpenNebula Flow and Gate services and Sunstone Web-UI. You can just need to select the OpenNebula version to install and a pick a password for oneadmin
-
-```yaml
-one_pass: opennebula
-one_version: '6.6'
-```
-
-### Enterprise Edition
-You can use your enterprise distribution with the Ansible playbooks. Simply add your token to the var file. Also you can enable the Prometheus and Grafana integration part of the Enterprise Edition:
-
-```yaml
-one_token: example:example
-features:
-  prometheus: true
-```
+To [configure the front-end services](arch_single_local#opennebula-front-end--services) or using your [enterprise edition token](arch_single_local#enterprise-edition) you can follow the local storage scenario sections.
 
 ## The complete inventory file
 
