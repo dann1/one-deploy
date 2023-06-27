@@ -55,7 +55,7 @@ oneadmin@ubuntu2204-14:~$ oneimage list
 Finally, let's create a VM based on the Alpine template. Also, we will attach the VM to the `admin_net` network:
 ```
 oneadmin@ubuntu2204-14:~$  onetemplate instantiate --nic admin_net alpine
-ID: 0
+VM ID: 0
 ```
 
 Now, wait for the VM to reach the running state (you can use `onevm top`):
