@@ -68,7 +68,7 @@ ds:
 
 ## Networking
 
-To [configure the networking](arch_single_local#arch_single_network)
+To [configure the networking](arch_single_local#networking)
 ## OpenNebula Front-end & Services
 
 The Ansible playbook installs a complete suite of OpenNebula services including the base daemons (oned and scheduler), the OpenNebula Flow and Gate services and Sunstone Web-UI. You can just need to select the OpenNebula version to install and a pick a password for oneadmin
