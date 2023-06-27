@@ -7,3 +7,4 @@
   * [Bastion host](arch_bastion)
   * [Other configurations](arch_other)
 * [Verifying the installation](sys_verify)
+* [Playbook Reference](sys_reference)
