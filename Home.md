@@ -2,7 +2,18 @@
 
 The OpenNebula Ansible project consists of a set of playbooks and roles that let you deploy an OpenNebula cloud in a simple and convinient way.
 
-The documentation is organized based on four distinct architectures. We will start with the most straightforward architecture and gradually move towards more complex scenarios. For each scenario, we will provide concise explanations of the configurations implemented on both the platform and OpenNebula.
+The documentation is organized based on three distinct architectures. We will start with the most straightforward architecture and gradually move towards more complex scenarios. For each scenario, we will provide concise explanations of the configurations implemented on both the platform and OpenNebula.
+
+## Contents
+
+* [Using the playbooks](sys_use)
+* Deployments
+  * [Local storage](arch_single_local)
+  * [Shared storage](arch_single_shared)
+  * [High availability front-ends](arch_ha)
+  * [Connect through a bastion host](arch_bastion)
+  * [Other configurations](arch_other)
+* [Verifying the installation](sys_verify)
 
 ## Requirements
 
@@ -20,14 +31,3 @@ $ git clone https://github.com/OpenNebula/one-deploy.git
 ```
 For more advance users, the playbooks are available as part of the [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula/cloud), just take a look at the documentation of each role in the OpenNebula collection to include them in your own playbooks.
 
-## Supported Architecture Deployments
-
-Please refer to each guide to deploy one of the following cloud architectures:
-
-* [Single OpenNebula front-end and local storage](arch_single_local)
-* [Single OpenNebula front-end and shared storage](arch_single_shared)
-* [Front-end in HA configuration](arch_ha)
-
-## Connecting to the Infrastructure through a Bastion host
-
-TBD
