@@ -87,6 +87,13 @@ frontend:
 
 :warning: **Note**: We support scaling **UP** only, as the reverse operation seems to be uncommon (you can still do it manually!).
 
-## SSH keys
+## RSYNC/SSH keys
 
-It's important to mention that adding extra Front-end machines requires synchronization of the OpenNebula Database and `/var/lib/one/{.one,.ssh}/` folders. All this happens automatically, but needs password-less login, so Ansible can utilize `rsync/ssh` to copy all required files from the Leader to new Followers.
+It's important to mention that adding extra Front-end machines requires synchronization of the OpenNebula Database and `/var/lib/one/{.one,.ssh}/` folders. All this happens automatically, but needs password-less login, so Ansible can utilize `rsync/ssh` to copy all required files from the Leader to new Followers. You can use `ssh-agent` or provision SSH keys yourself or use the `ensure_keys_for:` parameter to generate them automatically:
+
+```yaml
+all:
+  vars:
+    ansible_user: ubuntu
+    ensure_keys_for: [ubuntu]
+```
