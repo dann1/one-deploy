@@ -7,7 +7,7 @@ In order to deploy the OpenNebula front-ends in a HA mode you'll need at least 3
 * The front-ends may run as virtual machines. You need to provision those directly from libvirt/QEMU or any other virtualization platform.
 * The OpenNebula services will be reached through a Virtual IP (VIP). This IP will float to the active leader automatically.
 * This configuration is compatible with any storage configuration [shared](arch_single_shared) or [local](arch_single_local)
-* The front-ends needs to share the image repository. You need to mount the NFS share 
+* The front-ends needs to share the image repository. You need to mount the NFS share, then include the mount point in the inventory file as described in the [shared](arch_single_shared) or [local](arch_single_local) guides.
 
 <p align="center">
 <img src="images/arch_ha.png" width="60%">
