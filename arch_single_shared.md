@@ -94,7 +94,7 @@ To [configure the front-end services](arch_single_local#opennebula-front-end--se
 
 ## The complete inventory file
 
-The following file show the complete settings to install a single front-end with two hosts using local storage:
+The following file show the complete settings to install a single front-end with two hosts using shared storage:
 
 ```yaml
 ---
