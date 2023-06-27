@@ -86,5 +86,3 @@ frontend:
 :warning: **Note**: Conversion from non-HA to HA is not implemented in this automation, please plan ahead!
 
 :warning: **Note**: We support scaling **UP** only, as the reverse operation seems to be uncommon (you can still do it manually!).
-
-
