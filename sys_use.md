@@ -34,7 +34,7 @@ $ make requirements
 ```
 OR
 ```shell
-$ ansible-galaxy collection install --requirements-file requirements.yml
+$ ansible-galaxy collection install -r requirements.yml
 ```
 
 2. Create your inventory file inside the `inventory/` folder.
