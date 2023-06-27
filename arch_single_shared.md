@@ -55,13 +55,14 @@ The following snippet shows the configuration required to use the `shared` stora
 ```yaml
 ds:
   mode: shared
-  mounts:
-  - type: system
-    path: /mnt/0
-  - type: image
-    path: /mnt/1
-  - type: files
-    path: /mnt/2
+  config:
+    mounts:
+    - type: system
+      path: /mnt/0
+    - type: image
+      path: /mnt/1
+    - type: files
+      path: /mnt/2
 ```
 
 :warning: **Note**: files (`/mnt/2`) will only be symlinked in the front-end
@@ -87,13 +88,14 @@ all:
     one_pass: opennebulapass
     ds:
       mode: shared
-      mounts:
-      - type: system
-        path: /mnt/0
-      - type: image
-        path: /mnt/1
-      - type: files
-        path: /mnt/2
+      config:
+        mounts:
+        - type: system
+          path: /mnt/0
+        - type: image
+          path: /mnt/1
+        - type: files
+          path: /mnt/2
     vn:
       admin_net:
         managed: true
