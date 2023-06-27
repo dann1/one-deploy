@@ -17,9 +17,9 @@ The NFS/NAS server is configured to export the datastore folders to the hosts in
 ```
 root@nfs-server:/# ls -ln /srv
 total 0
-drwxr-xr-x 2 9869 9689 6 Jun 26 17:55 0
-drwxr-xr-x 2 9869 9689 6 Jun 26 17:55 1
-drwxr-xr-x 2 9869 9689 6 Jun 26 17:55 2
+drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 0
+drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 1
+drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 2
 ```
 :important: **Note**: The ownership of the folders **MUST** be 9869 as this is the UID/GID assigned to the `oneadmin` account during the installation.
 
@@ -52,9 +52,9 @@ root@ubuntu2204-17:/# ls -la /mnt/
 total 4
 drwxr-xr-x  5 root root   33 Jun 26 15:58 .
 drwxr-xr-x 18 root root 4096 Jun 27 09:30 ..
-drwxr-xr-x  2 9869 9689    6 Jun 26 15:55 0
-drwxr-xr-x  2 9869 9689    6 Jun 26 15:55 1
-drwxr-xr-x  2 9869 9689    6 Jun 26 15:55 2
+drwxr-xr-x  2 9869 9869    6 Jun 26 15:55 0
+drwxr-xr-x  2 9869 9869    6 Jun 26 15:55 1
+drwxr-xr-x  2 9869 9869    6 Jun 26 15:55 2
 ```
 
 **After running the playbook** you will see the following set up in the hosts:
