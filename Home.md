@@ -14,4 +14,4 @@ The documentation is organized based on three distinct architectures. We will st
   * [Connect through a bastion host](arch_bastion)
   * [Other configurations](arch_other)
 * [Verifying the installation](sys_verify)
-* [Playbook Reference](sys_reference)
+* [Playbook reference](sys_reference)
