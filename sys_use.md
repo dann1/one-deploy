@@ -56,7 +56,7 @@ $ make I=inventory/example.yml T=bastion,preinstall
 ```
 OR
 ```shell
-$ ansible-playbook -i inventory/example.yml opennebula.deploy.main --tags bastion,preinstall
+$ ansible-playbook -i inventory/example.yml opennebula.deploy.main -t bastion,preinstall
 ```
 
 5. Proceed normally like with any other Ansible playbook. Thank you! :hugs: 
