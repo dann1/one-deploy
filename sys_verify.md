@@ -26,7 +26,7 @@ oneadmin@ubuntu2204-14:~$ onedatastore list
 :warning: **Note**: If you deployed shared storage look for `shared` TM in `system` and `default` datastores.
 
 And finally the virtual networks created as part of the deployment:
-```shell
+```
 oneadmin@ubuntu2204-14:~$ onevnet list
   ID USER     GROUP    NAME                            CLUSTERS   BRIDGE            STATE        LEASES OUTD ERRO
    0 oneadmin oneadmin admin_net                       0          br0               rdy               0    0    0
