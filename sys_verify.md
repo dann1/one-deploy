@@ -23,6 +23,8 @@ oneadmin@ubuntu2204-14:~$ onedatastore list
    0 system                                                       - -   0             0 sys  -       ssh     on
 ```
 
+:warning: **Note**: If you deployed shared storage look for `shared` TM in `system` and `default` datastores.
+
 And finally the virtual networks created as part of the deployment:
 ```shell
 oneadmin@ubuntu2204-14:~$ onevnet list
