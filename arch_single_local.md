@@ -1,15 +1,9 @@
 # Single Front-end & Local Storage
 
 In this scenario we will have a single front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let’s us review some the main components.
-<!--
 <p align="center">
 <img src="images/arch_local.png" width="60%">
 </p>
- -->
-
-![](images/arch_net.png)
-![](images/sunstone.png)
-![](images/arch_local.png)
 
 ## Storage
 Virtual disk images are stored in local storage, with the front-end hosting an image repository (image datastore). These images are subsequently transferred from the front-end to the hypervisors to initiate the virtual machines (VMs). Both the front-end and hypervisors utilize the directory `/var/lib/one/datastores` to store these images. It is possible to either utilize the root file system (FS) for this directory or symlink from any other location.
