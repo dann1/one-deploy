@@ -1,5 +1,20 @@
 # Highly-available Front-end
 
+## Architecture
+
+In order to deploy the OpenNebula front-ends in a HA mode you'll need at least 3 (odd number of front-ends to reach consensus). For these servers you need to consider:
+
+* The front-ends may run as virtual machines. You need to provision those directly from libvirt/QEMU or any other virtualization platform.
+* The OpenNebula services will be reached through a Virtual IP (VIP). This IP will float to the active leader automatically.
+* This configuration is compatible with any storage configuration [shared](arch_single_shared) or [local](arch_single_local)
+* The front-ends needs to share the image repository. You need to mount the NFS share 
+
+<p align="center">
+<img src="images/arch_shared.png" width="60%">
+</p>
+
+## Ansible Role
+
 The `opennebula/server` role is capable of managing multiple, clustered OpenNebula Front-end machines. Each such machine is simply added to the built-in **Zone 0** of OpenNebula.
 
 ```
