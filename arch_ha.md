@@ -89,7 +89,7 @@ frontend:
 
 ## RSYNC/SSH keys
 
-It's important to mention that adding extra Front-end machines requires synchronization of the OpenNebula Database and `/var/lib/one/{.one,.ssh}/` folders. All this happens automatically, but needs password-less login, so Ansible can utilize `rsync/ssh` to copy all required files from the Leader to new Followers. You can use `ssh-agent` or provision SSH keys yourself or use the `ensure_keys_for:` parameter to generate them automatically:
+It's important to mention that adding extra Front-end machines requires synchronization of the OpenNebula Database and `/var/lib/one/{.one,.ssh}/` folders. All this happens automatically, but needs password-less login, so Ansible can utilize `rsync/ssh` to copy all required files from the Leader to new Followers (directly!). You can use `ssh-agent` or provision SSH keys yourself or use the `ensure_keys_for:` parameter to generate them automatically:
 
 ```yaml
 all:
