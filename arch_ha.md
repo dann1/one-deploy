@@ -10,7 +10,7 @@ In order to deploy the OpenNebula front-ends in a HA mode you'll need at least 3
 * The front-ends needs to share the image repository. You need to mount the NFS share 
 
 <p align="center">
-<img src="images/arch_shared.png" width="60%">
+<img src="images/arch_ha.png" width="60%">
 </p>
 
 ## Ansible Role
