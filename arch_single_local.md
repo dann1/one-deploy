@@ -105,7 +105,7 @@ vn:
 
 ## OpenNebula Front-end & Services
 
-The Ansible playbook installs a complete suite of OpenNebula services including the base daemons (oned and scheduler), the OpenNebula Flow and Gate services and Sunstone Web-UI. You can just need to select the OpenNebula version to install and a pick a password for oneadmin
+The Ansible playbook installs a complete suite of OpenNebula services including the base daemons (oned and scheduler), the OpenNebula Flow and Gate services and Sunstone Web-UI. You can just select the OpenNebula version to install and a pick a password for oneadmin
 
 ```yaml
 all:
@@ -113,6 +113,29 @@ all:
     one_pass: opennebula
     one_version: '6.6'
 ```
+
+The Sunstone Server can be deployed as a SystemD service (`opennebula-sunstone`) or on top of the [Phusion Passenger](https://www.phusionpassenger.com/docs/tutorials/what_is_passenger/) Apache2 module (for improved performance), you can find more info about this integration [here](https://docs.opennebula.io/stable/installation_and_configuration/large-scale_deployment/sunstone_for_large_deployments.html). By default Apache2 is not configured, you can enable it by defining few inventory vars:
+
+```yaml
+all:
+  vars:
+    features:
+      # Enable Passenger/Apache2 integration.
+      passenger: true
+    apache2_http:
+      # Do NOT manage (or deploy) plain HTTP Apache2 VHOST.
+      managed: false
+    apache2_https:
+      # Do manage and deploy HTTPS Apache2 VHOST.
+      managed: true
+      # NOTE: The key and certchain vars should point to existing and valid PEM files.
+      key: /etc/ssl/private/opennebula-key.pem
+      certchain: /etc/ssl/certs/opennebula-certchain.pem
+    # Access your instance at https://myone.example.org.
+    one_fqdn: myone.example.org
+```
+
+:warning: **Note:** When the Passenger integration is enabled, the `opennebula-sunstone` SystemD service is automatically stopped and disabled.
 
 ### Enterprise Edition
 You can use your enterprise distribution with the Ansible playbooks. Simply add your token to the var file. Also you can enable the Prometheus and Grafana integration part of the Enterprise Edition:
