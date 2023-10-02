@@ -11,6 +11,7 @@ The documentation is organized based on three distinct architectures. We will st
 * Deployments
   * [Local storage](arch_single_local)
   * [Shared storage](arch_single_shared)
+  * [Ceph storage](arch_single_ceph)
   * [High availability front-ends](arch_ha)
   * [Connect through a bastion host](arch_bastion)
   * [Other configurations](arch_other)
