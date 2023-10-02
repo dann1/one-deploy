@@ -4,6 +4,7 @@
 * Deployments
   * [Local storage](arch_single_local)
   * [Shared storage](arch_single_shared)
+  * [Ceph storage](arch_single_ceph)
   * [High availability](arch_ha)
   * [Bastion host](arch_bastion)
   * [Other configurations](arch_other)
