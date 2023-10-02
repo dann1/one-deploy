@@ -124,7 +124,8 @@ ceph:
     ? osds
   vars:
     osd_memory_target: 4294967296 # 4GiB (default)
-    # Assuming all osds are of equal size, setup resource limits and reservations for all osd systemd services.
+    # Assuming all osds are of equal size, setup resource limits and reservations
+    # for all osd systemd services.
     ceph_osd_systemd_overrides:
       Service:
         CPUWeight: 200 # 100 is the kernel default
