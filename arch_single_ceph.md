@@ -154,6 +154,71 @@ osds:
     n3: { ansible_host: 172.20.0.9 }
 ```
 
+### CRUSH Maps
+
+It is possible to manage CRUSH Maps in `ceph-ansible`, please take a look at the partial inventory below:
+
+```yaml
+osds:
+  vars:
+    # Disable OSD device auto-discovery, as the devices are explicitly specified below (per each OSD node).
+    osd_auto_discovery: false
+    # Enable CRUSH rule/map management.
+    crush_rule_config: true
+    create_crush_tree: true
+    # Define CRUSH rules.
+    crush_rule_hdd:
+      name: HDD
+      root: root1
+      type: host
+      class: hdd
+      default: false
+    crush_rules:
+      - "{{ crush_rule_hdd }}"
+  hosts:
+    osd1:
+      ansible_host: 172.20.0.10
+      devices:
+        - /dev/vdb
+        - /dev/vdc
+      osd_crush_location: { host: osd1, rack: rack1, root: root1 }
+    osd2:
+      ansible_host: 172.20.0.11
+      devices:
+        - /dev/vdb
+        - /dev/vdc
+      osd_crush_location: { host: osd2, rack: rack2, root: root1 }
+    osd3:
+      ansible_host: 172.20.0.12
+      devices:
+        - /dev/vdb
+        - /dev/vdc
+      osd_crush_location: { host: osd3, rack: rack3, root: root1 }
+```
+
+Running the `opennebula.deploy.ceph` playbook should result in such CRUSH architecture:
+
+```shell
+# ceph osd crush tree
+ID   CLASS  WEIGHT   TYPE NAME
+-15         0.37500  root root1
+ -9         0.12500      rack rack1
+ -3         0.12500          host osd1
+  0    hdd  0.06250              osd.0
+  3    hdd  0.06250              osd.3
+-11         0.12500      rack rack2
+ -7         0.12500          host osd2
+  1    hdd  0.06250              osd.1
+  4    hdd  0.06250              osd.4
+-10         0.12500      rack rack3
+ -5         0.12500          host osd3
+  2    hdd  0.06250              osd.2
+  5    hdd  0.06250              osd.5
+ -1               0  root default
+```
+
+Please refer to the official Ceph [documentation on CRUSH Maps](https://docs.ceph.com/en/quincy/rados/operations/crush-map/).
+
 ## Local Ceph cluster deployment
 
 The one-deploy project comes with the `opennebula.deploy.ceph` playbook that can be executed as follows:
