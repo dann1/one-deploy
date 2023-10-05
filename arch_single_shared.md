@@ -78,11 +78,11 @@ ds:
       path: /mnt/0
     - type: image
       path: /mnt/1
-    - type: files
+    - type: file
       path: /mnt/2
 ```
 
-:warning: **Note**: files (`/mnt/2`) will only be symlinked in the front-end
+:warning: **Note**: file (`/mnt/2`) will only be symlinked in the front-end
 
 ## Networking
 
@@ -111,7 +111,7 @@ all:
           path: /mnt/0
         - type: image
           path: /mnt/1
-        - type: files
+        - type: file
           path: /mnt/2
     vn:
       admin_net:
