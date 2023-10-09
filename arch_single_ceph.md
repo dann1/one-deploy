@@ -53,7 +53,8 @@ ceph:
     ? mons
     ? mgrs
     ? osds
-  vars: {}
+  vars:
+    osd_auto_discovery: true
 
 mons:
   hosts:
@@ -137,6 +138,7 @@ ceph:
       osd:
         ? osd memory target
         : "{{ osd_memory_target | int }}"
+    osd_auto_discovery: true
 
 mons:
   hosts:
@@ -235,7 +237,8 @@ ceph:
     ? mons
     ? mgrs
     ? osds
-  vars: {}
+  vars:
+    osd_auto_discovery: true
 
 mons:
   hosts:
@@ -267,6 +270,6 @@ ansible -i inventory/ceph.yml all -m ping -b
 ```
 * **3. Site installation**: Now we can run the site playbooks that provision a local Ceph cluster install and configure OpenNebula services
 ```shell
-ansible-playbook -i inventory/ceph.yml opennebula.deploy.ceph opennebula.deploy.main
+ansible-playbook -i inventory/ceph.yml opennebula.deploy.pre opennebula.deploy.ceph opennebula.deploy.site
 ```
 Once the execution of the playbooks finish your new OpenNebula cloud is ready. [You can now head to the verification guide](sys_verify).
