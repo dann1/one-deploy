@@ -17,3 +17,4 @@ The documentation is organized based on three distinct architectures. We will st
   * [Other configurations](arch_other)
 * [Verifying the installation](sys_verify)
 * [Playbook reference](sys_reference)
+* [Molecule testing](test_molecule)
