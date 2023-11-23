@@ -2,7 +2,7 @@
 
 ## Requirements (client)
 
-Molecule and pyone are installed as python/pip dependencies for `one-deploy`:
+`Molecule` and `pyone` are installed as python/pip dependencies for one-deploy:
 
 ```shell
 ~/one-deploy$ cat requirements.txt
@@ -11,7 +11,7 @@ molecule
 pyone>=6.8.0
 ```
 
-You can install all `one-deploy` requirements using the included Makefile:
+You can install all one-deploy requirements using the included Makefile:
 
 ```shell
 ~/one-deploy $ make requirements
