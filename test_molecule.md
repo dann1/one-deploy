@@ -31,7 +31,7 @@ OpenNebula instance with pre-configured networking and pre-installed OS images a
 
 :warning: You can use OpenNebula's [Public Marketplace](https://marketplace.opennebula.io/appliance) to download them.
 
-Download (and rename) VM templates and OS images into your OpenNebula instance.
+Download (and rename) VM templates and OS images into your OpenNebula instance:
 
 - `Ubuntu 22.04` -> `ubuntu2204`
 - `Ubuntu 20.04` -> `ubuntu2004`
@@ -56,7 +56,7 @@ ONE_RANGE3: 172.20.86.108 4
 
 - Provide OpenNebula endpoint and credentials.
 - Provide your support token (required for the `prometheus-ha` environment).
-- Customize VNET name, subnet and custom IP ranges.
+- Customize VNET name, subnet and IP ranges.
 
 ## Converging environments
 
