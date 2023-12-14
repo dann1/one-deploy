@@ -7,6 +7,7 @@ The documentation is organized based on three distinct architectures. We will st
 ## Contents
 
 * [Requirements & Platform Notes](sys_reqs)
+* [Release notes](rel_notes)
 * [Using the playbooks](sys_use)
 * Deployments
   * [Local storage](arch_single_local)
