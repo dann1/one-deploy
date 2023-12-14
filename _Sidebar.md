@@ -1,5 +1,6 @@
 **[Home](Home)**
 * [Requirements & Platform Notes](sys_reqs)
+* [Release Notes](rel_notes)
 * [Using the playbooks](sys_use)
 * Deployments
   * [Local storage](arch_single_local)
