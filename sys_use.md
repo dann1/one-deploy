@@ -63,12 +63,12 @@ $ ansible-playbook -i inventory/example.yml opennebula.deploy.main -t bastion,pr
 
 ## Ansible Galaxy Collection
 
-For more advance users, the playbooks are available as part of the [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula), just take a look at the documentation of each role in the OpenNebula collection to include them in your own playbooks.
+Although we initially pushed pre-release `0.1.0` to [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula), we no longer wish to maintain it. Instead we recommend using [much cleaner method](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#installing-a-collection-from-a-git-repository).
 
-To install the `opennebula.deploy` collection directly from [Ansible Galaxy](https://galaxy.ansible.com/opennebula/deploy) execute:
+To install the `opennebula.deploy` collection directly from GitHub, execute:
 
 ```shell
-$ ansible-galaxy collection install --upgrade opennebula.deploy
+$ ansible-galaxy collection install --upgrade git@github.com:OpenNebula/one-deploy.git,release-1.0.0
 ```
 
 To deploy a full OpenNebula environment using playbooks downloaded together with the collection:
@@ -151,6 +151,7 @@ $ (cd ~/my-one/ && ansible-playbook -v keys.yml)
 | Tag          | Description                                             |
 |--------------|---------------------------------------------------------|
 | `bastion`    | Render local SSH jump-host configs                      |
+| `ceph`       | Manage Ceph on the OpenNebula's side                    |
 | `datastore`  | Manage datastores                                       |
 | `flow`       | Manage the OneFlow service                              |
 | `frontend`   | Run all tasks needed for Front-end deployment           |
