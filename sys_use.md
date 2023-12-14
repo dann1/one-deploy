@@ -71,7 +71,7 @@ To install the `opennebula.deploy` collection directly from GitHub, execute:
 $ ansible-galaxy collection install --upgrade git@github.com:OpenNebula/one-deploy.git,release-1.0.0
 ```
 
-⚠️ Note: If you intend to deploy Ceph clusters with one-deploy, please use the [direct clone method](sys_use#github-project).
+:warning: **Note:** If you intend to deploy Ceph clusters with one-deploy, please use the [direct clone method](sys_use#github-project).
 
 To deploy a full OpenNebula environment using playbooks downloaded together with the collection:
 
