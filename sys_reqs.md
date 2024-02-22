@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Platform Notes
 
 The playbooks are tested and verified on the following systems:

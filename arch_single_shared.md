@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Single Front-end & Shared Storage
 
 This scenario is a variation of the [local storage](arch_single_local) setup. Here, the storage for virtual machines (VMs) and the image repository are provided by a NFS/NAS server. Running VMs directly from shared storage can enhance the fault tolerance of the system in the event of a host failure, although it comes with the drawback of increased I/O latency.
@@ -6,7 +8,8 @@ This scenario is a variation of the [local storage](arch_single_local) setup. He
 <img src="images/arch_shared.png" width="60%">
 </p>
 
-:warning: **Note**: The playbook assumes that you have already configured and mounted the NFS shares in all the servers.
+> [!NOTE]
+> The playbook assumes that you have already configured and mounted the NFS shares in all the servers.
 
 ## Storage
 
@@ -82,7 +85,8 @@ ds:
       path: /mnt/2
 ```
 
-:warning: **Note**: file (`/mnt/2`) will only be symlinked in the front-end
+> [!NOTE]
+> File (`/mnt/2`) will only be symlinked in the front-end
 
 ## Networking
 

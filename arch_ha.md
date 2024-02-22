@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Highly-available Front-end
 
 ## Architecture
@@ -61,7 +63,8 @@ frontend:
     n1a3: { ansible_host: 10.2.50.12 }
 ```
 
-:warning: **Note**: All `one_vip*` parameters are strictly required for HA mode to work, i.e. inside the **Leader** Front-end you will **always** find:
+> [!NOTE]
+> All `one_vip*` parameters are strictly required for HA mode to work, i.e. inside the **Leader** Front-end you will **always** find:
 
 ```
 root@n1a1:~# ip address show eth0
@@ -98,9 +101,11 @@ frontend:
     n1a3: { ansible_host: 10.2.50.12 }
 ```
 
-:warning: **Note**: Conversion from non-HA to HA is not implemented in this automation, please plan ahead!
+> [!NOTE]
+> Conversion from non-HA to HA is not implemented in this automation, please plan ahead!
 
-:warning: **Note**: We support scaling **UP** only, as the reverse operation seems to be uncommon (you can still do it manually!).
+> [!NOTE]
+> We support scaling **UP** only, as the reverse operation seems to be uncommon (you can still do it manually!).
 
 ## RSYNC/SSH keys
 

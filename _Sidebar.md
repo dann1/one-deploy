@@ -3,6 +3,7 @@
 * [Release Notes](rel_notes)
 * [Using the playbooks](sys_use)
 * Deployments
+  * [Front-end VMs](arch_infra)
   * [Local storage](arch_single_local)
   * [Shared storage](arch_single_shared)
   * [Ceph storage](arch_single_ceph)

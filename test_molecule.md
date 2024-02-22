@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Molecule testing
 
 ## Requirements (client)
@@ -29,7 +31,8 @@ Or directly:
 To deploy molecule integration environments (`ceph-hci`, `passenger-ha`, ...) you're going to need a working
 OpenNebula instance with pre-configured networking and pre-installed OS images and VM templates.
 
-:warning: You can use OpenNebula's [Public Marketplace](https://marketplace.opennebula.io/appliance) to download them.
+> [!NOTE]
+> You can use OpenNebula's [Public Marketplace](https://marketplace.opennebula.io/appliance) to download them.
 
 Download (and rename) VM templates and OS images into your OpenNebula instance:
 

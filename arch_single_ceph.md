@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Single Front-end & Ceph Storage
 
 This scenario is a variation of the [shared storage](https://github.com/OpenNebula/one-deploy/wiki/arch_single_shared/) setup. Here, the storage for virtual machines (VMs) and the image repository are provided by a local Ceph cluster. Running VMs directly from Ceph storage can enhance the fault tolerance of the system in the event of a host failure, although it comes with the drawback of increased I/O latency.
@@ -8,7 +10,8 @@ This scenario is a variation of the [shared storage](https://github.com/OpenNebu
 
 In this scenario Ceph OSD servers are deployed on dedicated hosts. Please refer to the documentation of the [ceph-ansible](https://docs.ceph.com/projects/ceph-ansible/en/latest/) project and to the group variable definions inside its [official git repository](https://github.com/ceph/ceph-ansible/tree/main/group_vars) for the full guide on how to configure it.
 
-:warning: **Note**: one-deploy uses only specific roles for the `ceph-ansible` project and introduces the `opennebula.deploy.ceph` playbook to be executed **before** the main deployment.
+> [!NOTE]
+> One-deploy uses only specific roles from the `ceph-ansible` project and introduces the `opennebula.deploy.ceph` playbook to be executed **before** the main deployment.
 
 ```yaml
 ---
@@ -76,7 +79,8 @@ osds:
 In this scenario we deploy Ceph OSD servers along the OpenNebula KVM nodes. Here, we limit and reserve CPU and RAM for Ceph OSDs to ensure
 they interfere with the running guest VMs as lightly as possible.
 
-:warning: **Note**: The exact amount of CPU and RAM depends on the size of the specific OSD, please refer to the Ceph documentation to calculate these.
+> [!NOTE]
+> The exact amount of CPU and RAM depends on the size of the specific OSD, please refer to the Ceph documentation to calculate these.
 
 ```yaml
 ---

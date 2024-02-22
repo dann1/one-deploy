@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Single Front-end & Local Storage
 
 In this scenario we will have a single front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let’s us review some the main components.
@@ -16,7 +18,8 @@ ds:
   mode: ssh
 ```
 
-:warning: **Note**: If you want to use a dedicated volume for all your datastores, you can pre-mount it in `/var/lib/one/datastores/`.
+> [!NOTE]
+> If you want to use a dedicated volume for all your datastores, you can pre-mount it in `/var/lib/one/datastores/`.
 
 If you want to use a dedicated volume mounted in a custom location (for example `/mnt/one_datastores/`), then you need to pre-create directories (owned by `oneadmin`) for each datastore and use the following snippet which will cause symlinks to be created automatically:
 
@@ -55,7 +58,8 @@ The most basic network configuration is a flat network (bridged). We will use th
 
 <img src="images/arch_net.png" width="60%" align="right">
 
-:warning: **Note**: The playbook requires either Netplan or NetworkManager to be present in the Hosts to perform the initial configuration.
+> [!NOTE]
+> The playbook requires either Netplan or NetworkManager to be present in the Hosts to perform the initial configuration.
 
 To create the virtual network for the VMs you need to pick up some IP. These IP addresses need to be reachable through the Network used by the main interface of the host, as the VM traffic will be forwarded through it.
 
@@ -135,7 +139,8 @@ all:
     one_fqdn: myone.example.org
 ```
 
-:warning: **Note:** When the Passenger integration is enabled, the `opennebula-sunstone` SystemD service is automatically stopped and disabled.
+> [!NOTE]
+> When the Passenger integration is enabled, the `opennebula-sunstone` SystemD service is automatically stopped and disabled.
 
 ### Enterprise Edition
 You can use your enterprise distribution with the Ansible playbooks. Simply add your token to the var file. Also you can enable the Prometheus and Grafana integration part of the Enterprise Edition:

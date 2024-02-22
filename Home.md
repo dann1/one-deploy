@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # OpenNebula Ansible Playbooks Documentation
 
 The OpenNebula Ansible project consists of a set of playbooks and roles that let you deploy an OpenNebula cloud in a simple and convenient way.
@@ -10,6 +12,7 @@ The documentation is organized based on three distinct architectures. We will st
 * [Release notes](https://github.com/OpenNebula/one-deploy/releases)
 * [Using the playbooks](sys_use)
 * Deployments
+  * [Front-end VMs](arch_infra)
   * [Local storage](arch_single_local)
   * [Shared storage](arch_single_shared)
   * [Ceph storage](arch_single_ceph)

@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Deployment via Bastion Host
 
 In some cases direct access from Ansible controller to targets in the inventory is not possible or difficult. You can use the `bastion` role to construct custom SSH config out of your inventory, then provision your hosts automatically through a SSH jump host.

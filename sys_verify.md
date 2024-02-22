@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Verifying the Installation
 
 The following guide provides a quick tour of your new installed system. This system has been created using the inventory files showed in the examples, so you may need to adapt IPs and host names to your infrastructure.
@@ -23,7 +25,8 @@ oneadmin@ubuntu2204-14:~$ onedatastore list
    0 system                                                       - -   0             0 sys  -       ssh     on
 ```
 
-:warning: **Note**: If you deployed shared storage look for `shared` TM in `system` and `default` datastores.
+> [!NOTE]
+> If you deployed shared storage look for `shared` TM in `system` and `default` datastores.
 
 And finally the virtual networks created as part of the deployment:
 ```
@@ -34,7 +37,8 @@ oneadmin@ubuntu2204-14:~$ onevnet list
 
 ## Import a Marketplace Appliance
 
-:warning: **Note**: This require the front-end to have Internet access properly configured
+> [!NOTE]
+> This require the front-end to have Internet access properly configured
 
 Let's download an alpine image from the OpenNebula MarketPlace so we can later create some test VMs:
 

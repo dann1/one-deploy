@@ -1,3 +1,5 @@
+[//]: # ( vim: set wrap : )
+
 # Using the Playbooks
 
 ## GitHub Project
@@ -18,10 +20,11 @@ collections_paths = ./ansible_collections/
 ```shell
 $ stat ./ansible_collections/opennebula/deploy
   File: ./ansible_collections/opennebula/deploy -> ../../
-  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+  Size: 6           Blocks: 0          IO Block: 4096   symbolic link
 ```
 
-:warning: **Note:** That effectively allows you to use files cloned from git as a "local" galaxy collection.
+> [!NOTE]
+> That effectively allows you to use files cloned from git as a "local" galaxy collection.
 
 You can either use included Makefile or enter ansible-playbook commands directly.
 
@@ -59,7 +62,7 @@ OR
 $ ansible-playbook -i inventory/example.yml opennebula.deploy.main -t bastion,preinstall
 ```
 
-5. Proceed normally like with any other Ansible playbook. Thank you! :hugs: 
+5. Proceed normally like with any other Ansible playbook. Thank you! :hugs:
 
 ## Ansible Galaxy Collection
 
@@ -71,7 +74,8 @@ To install the `opennebula.deploy` collection directly from GitHub, execute:
 $ ansible-galaxy collection install --upgrade git@github.com:OpenNebula/one-deploy.git,release-1.0.0
 ```
 
-:warning: **Note:** If you intend to deploy Ceph clusters with one-deploy, please use the [direct clone method](sys_use#github-project).
+> [!NOTE]
+> If you intend to deploy Ceph clusters with one-deploy, please use the [direct clone method](sys_use#github-project).
 
 To deploy a full OpenNebula environment using playbooks downloaded together with the collection:
 
