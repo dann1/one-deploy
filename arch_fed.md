@@ -2,7 +2,7 @@
 
 # Federated Front-ends
 
-OpenNebula federation feature has proven to be stable and reliable over the years. It allows users to construct a single federated cluster out of multiple smaller OpenNebula instances (HA or non-HA). The idea behind this feature is to provide architecture similar to AWS' Availability Zones, but only inside on-premise datacenters.
+OpenNebula federation feature has proven to be stable and reliable over the years. It allows users to construct a single federated cluster out of multiple smaller OpenNebula instances (HA or non-HA). The idea behind this feature is to provide architecture similar to AWS' Availability Zones.
 
 > [!NOTE]
 > You can learn more about **OpenNebula Data Center Federation** → [here](https://docs.opennebula.io/stable/installation_and_configuration/data_center_federation/index.html).
