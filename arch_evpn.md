@@ -8,6 +8,9 @@ To establish the BGP/EVPN Control Plane in one-deploy we use the [FRR/EVPN](http
 
 ## Architecture
 
+The hypervisor/VTEP runs a BGP EVPN capable router using FFRouting (FRR). Its main purpose is to send BGP updates with the MAC address and IP (optional) for each VXLAN tunnel endpoint (i.e. the VM interfaces in the VXLAN network) running in the Host. The updates are distributed to all the hypervisors using one or more BGP route reflectors (RR). The following diagram shows the main components of the architecture.
+
+
 ```
 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┐
 │ Front-end (HA)                   │
