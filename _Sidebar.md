@@ -14,3 +14,4 @@
 * [Verifying the installation](sys_verify)
 * [Playbook reference](sys_reference)
 * [Molecule testing](test_molecule)
+* [Coding style](code_style)
