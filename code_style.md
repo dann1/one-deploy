@@ -230,6 +230,7 @@ Some examples of what we consider "correct" vs "incorrect" implementations:
 - name: Task description
   ansible.builtin.yum:
     name: [vim, qemu-img]
+    update_cache: true
   when: ansible_os_family == 'RedHat'
 ```
 
@@ -239,6 +240,7 @@ Some examples of what we consider "correct" vs "incorrect" implementations:
 - name: Task description
   ansible.builtin.package:
     name: "{{ _common + _specific[ansible_os_family] }}"
+    update_cache: true
   vars:
     _common: [vim]
     _specific:
