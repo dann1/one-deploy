@@ -17,9 +17,10 @@ The playbooks are tested and verified on the following systems:
 
 It's possible to pre-install all requirements in a python virtualenv through use of [poetry](https://python-poetry.org/). For example in Ubuntu 22.04 you can try these steps:
 
-1. `apt install python3-poetry`
-2. `git clone git@github.com:OpenNebula/one-deploy.git`
-3. `cd ./one-deploy/ && make requirements`
+1. `apt install python3-pip`
+2. `pip3 install poetry`
+3. `git clone git@github.com:OpenNebula/one-deploy.git`
+4. `cd ./one-deploy/ && make requirements`
 
 Then you can use poetry to inspect and use the virtual environment, for example:
 
