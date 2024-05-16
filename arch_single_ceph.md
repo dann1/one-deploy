@@ -33,9 +33,9 @@ ceph:
 
 mons:
   hosts:
-      stor01: {ansible_host: '10.255.0.1', monitor_address: '10.255.0.11'}
-      stor02: {ansible_host: '10.255.0.2', monitor_address: '10.255.0.12'}
-      stor03: {ansible_host: '10.255.0.3', monitor_address: '10.255.0.13'}
+      stor01: {ansible_host: '10.255.0.1', monitor_address: '10.255.0.1'}
+      stor02: {ansible_host: '10.255.0.2', monitor_address: '10.255.0.2'}
+      stor03: {ansible_host: '10.255.0.3', monitor_address: '10.255.0.3'}
 
 mgrs:
   hosts:
