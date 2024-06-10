@@ -1,6 +1,6 @@
 **[Home](Home)**
 * [Requirements & Platform Notes](sys_reqs)
-* [Release Notes](rel_notes)
+* [Release Notes](https://github.com/OpenNebula/one-deploy/releases)
 * [Using the playbooks](sys_use)
 * Deployments
   * [Front-end VMs](arch_infra)
