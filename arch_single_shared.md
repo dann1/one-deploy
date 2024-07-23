@@ -24,9 +24,13 @@ drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 0
 drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 1
 drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 2
 ```
-:important: **Note**: The ownership of the folders **MUST** be 9869 as this is the UID/GID assigned to the `oneadmin` account during the installation.
 
-:important: **Note**: The files & kernels datastore (folder `/srv/2`, in the example) will be only mounted in the front-end; hosts will always use local storage for this datastore.
+> [!IMPORTANT]
+> The ownership of the folders **MUST** be 9869 as this is the UID/GID assigned to the `oneadmin` account during the installation.
+
+
+> [!IMPORTANT]
+> The files & kernels datastore (folder `/srv/2`, in the example) will be only mounted in the front-end; hosts will always use local storage for this datastore.
 
 This folder is exported to the OpenNebula servers, for example:
 
