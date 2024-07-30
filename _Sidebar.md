@@ -12,6 +12,7 @@
   * [VXLAN/EVPN networking](arch_evpn)
   * [Connect through a bastion host](arch_bastion)
 * [Verifying the installation](sys_verify)
+* [Airgapped installation](sys_airgap)
 * [Playbook reference](sys_reference)
 * [Molecule testing](test_molecule)
 * [Coding style](code_style)
