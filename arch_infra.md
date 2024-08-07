@@ -114,7 +114,7 @@ frontend:
 ```
 
 - The `context` dictionary above contains *minimal* set of attributes to make networking operational inside the Front-end VMs.
-- The PASSWORD context attribute sets the SSH password for the root user on the Frontend VM. Specify the desired password or remove the attribute completely in order to disable password-based root SSH access.
+- The `PASSWORD` context attribute sets the SSH password for the root user on the Frontend VM. Specify the desired password or remove the attribute completely in order to disable password-based root SSH access.
 - The `infra_hostname` must point to an inventory hostname from the **infra** group, this effectively means that the Front-end VM will be deployed on that *bare metal (infra) host*.
 
 > [!WARNING]
