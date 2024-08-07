@@ -58,7 +58,7 @@ frontend:
       ETH0_MASK: 255.255.255.0
       ETH0_NETWORK: 10.2.50.0
       ETH0_IP: "{{ ansible_host }}"
-      PASSWORD: opennebula
+      PASSWORD: # PUT YOUR PASSWORD HERE
       SSH_PUBLIC_KEY: |
         ssh-rsa AAA... mopala@opennebula.io
         ssh-rsa AAA... sk4zuzu@gmail.com
@@ -103,7 +103,7 @@ frontend:
       ETH0_MASK: 255.255.255.0
       ETH0_NETWORK: 10.2.50.0
       ETH0_IP: "{{ ansible_host }}"
-      PASSWORD: opennebula
+      PASSWORD:  # PUT YOUR PASSWORD HERE
       SSH_PUBLIC_KEY: |
         ssh-rsa AAA... mopala@opennebula.io
         ssh-rsa AAA... sk4zuzu@gmail.com
@@ -114,6 +114,7 @@ frontend:
 ```
 
 - The `context` dictionary above contains *minimal* set of attributes to make networking operational inside the Front-end VMs.
+- The PASSWORD context attribute sets the SSH password for the root user on the Frontend VM. Specify the desired password or remove the attribute completely in order to disable password-based root SSH access.
 - The `infra_hostname` must point to an inventory hostname from the **infra** group, this effectively means that the Front-end VM will be deployed on that *bare metal (infra) host*.
 
 > [!WARNING]
