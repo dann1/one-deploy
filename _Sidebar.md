@@ -13,7 +13,7 @@
   * [VXLAN/EVPN networking](arch_evpn)
 * Additional Installation Options
   * [Airgapped installation](sys_airgap)
-  * [Front-end VMs](arch_infra)
+  * [Front-end installation as VMs](arch_infra)
   * [Connect through a bastion host](arch_bastion)
 * Developer Information
   * [Playbook reference](sys_reference)
