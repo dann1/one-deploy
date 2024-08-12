@@ -11,17 +11,20 @@ The documentation is organized based on three distinct architectures. We will st
 * [Requirements & Platform Notes](sys_reqs)
 * [Release notes](https://github.com/OpenNebula/one-deploy/releases)
 * [Using the playbooks](sys_use)
-* Deployments
-  * [Front-end VMs](arch_infra)
+* Reference Deployments
   * [Local storage](arch_single_local)
   * [Shared storage](arch_single_shared)
   * [Ceph storage](arch_single_ceph)
+* [Verifying the installation](sys_verify)
+* Advance Configurations
   * [Highly-available Front-end](arch_ha)
   * [Federated Front-ends](arch_fed)
   * [VXLAN/EVPN networking](arch_evpn)
+* Additional Installation Options
+  * [Airgapped installation](sys_airgap)
+  * [Front-end VMs](arch_infra)
   * [Connect through a bastion host](arch_bastion)
-* [Verifying the installation](sys_verify)
-* [Airgapped installation](sys_airgap)
-* [Playbook reference](sys_reference)
-* [Molecule testing](test_molecule)
-* [Coding style](code_style)
+* Developer Information
+  * [Playbook reference](sys_reference)
+  * [Molecule testing](test_molecule)
+  * [Coding style](code_style)
