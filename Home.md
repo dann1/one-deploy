@@ -22,7 +22,7 @@ The documentation is organized based on three distinct architectures. We will st
   * [VXLAN/EVPN networking](arch_evpn)
 * Additional Installation Options
   * [Airgapped installation](sys_airgap)
-  * [Front-end VMs](arch_infra)
+  * [Front-end installation as VM](arch_infra)
   * [Connect through a bastion host](arch_bastion)
 * Developer Information
   * [Playbook reference](sys_reference)
