@@ -3,9 +3,9 @@
 * [Release Notes](https://github.com/OpenNebula/one-deploy/releases)
 * [Using the playbooks](sys_use)
 * Reference Deployments
-  * [Local storage](arch_single_local)
-  * [Shared storage](arch_single_shared)
-  * [Ceph storage](arch_single_ceph)
+  * [Single FE Cloud and local storage](arch_single_local)
+  * [Single FE Cloud and shared storage](arch_single_shared)
+  * [Single FE Cloud and Ceph storage](arch_single_ceph)
 * [Verifying the installation](sys_verify)
 * Advance Configurations
   * [Highly-available Front-end](arch_ha)
