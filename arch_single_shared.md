@@ -147,6 +147,99 @@ node:
     n2: { ansible_host: 172.20.0.8 }
 ```
 
+## Mounting NFS shares (or other filesystems)
+
+Since the release `1.2.0` it has become possible to mount and persist (in `/etc/fstab`) arbitrary filesystems, the interface is really simple:
+
+```yaml
+---
+all:
+  vars:
+    ansible_user: root
+    ensure_keys_for: [root]
+    ensure_hosts: true
+    update_pkg_cache: true
+    unattend_disable: true
+
+    one_pass: asd
+    one_version: '6.10'
+    one_vip: 10.2.50.86
+    one_vip_cidr: 24
+    one_vip_if: br0
+
+    vn:
+      service:
+        managed: true
+        template:
+          VN_MAD: bridge
+          BRIDGE: br0
+          AR:
+            TYPE: IP4
+            IP: 10.2.50.200
+            SIZE: 48
+          NETWORK_ADDRESS: 10.2.50.0
+          NETWORK_MASK: 255.255.255.0
+          GATEWAY: 10.2.50.1
+          DNS: 10.2.50.1
+
+    ds: { mode: shared }
+
+    fstab:
+      - src: "10.2.50.1:/var/lib/one/datastores"
+
+frontend:
+  hosts:
+    n1a1: { ansible_host: 10.2.50.10 }
+    n1a2: { ansible_host: 10.2.50.11 }
+
+node:
+  hosts:
+    n1b1: { ansible_host: 10.2.50.20 }
+    n1b2: { ansible_host: 10.2.50.21 }
+```
+
+Assuming the `10.2.50.1:/var/lib/one/datastores` is a NFS share that can be attached to all machines from the `frontend` and `node` groups, the yaml snippet below does exactly that:
+
+```yaml
+    ds: { mode: shared }
+
+    fstab:
+      - src: "10.2.50.1:/var/lib/one/datastores"
+```
+
+By default the share is mounted in `/var/lib/one/datastores/`, but this behavior can be changed so any type of `/etc/fstab` entry should be possible to configure, for example:
+
+```yaml
+    ds:
+      mode: shared
+      config:
+        mounts:
+          - type: system
+            path: /mnt/0
+          - type: image
+            path: /mnt/1
+          - type: file
+            path: /mnt/2
+
+    fstab:
+      - src: "10.2.50.1:/shared"
+        path: /mnt
+        fstype: nfs
+        opts: rw,relatime,comment=one-deploy
+```
+
+It's also perfectly viable to define different `fstab` lists for each distinct inventory hostname, group or subgroup:
+
+```yaml
+frontend:
+  vars:
+    fstab:
+      - src: "10.2.50.1:/var/lib/one/datastores"
+  hosts:
+    n1a1: { ansible_host: 10.2.50.10 }
+    n1a2: { ansible_host: 10.2.50.11 }
+```
+
 ## Running the Ansible Playbook
 
 * **1. Prepare the inventory file**: Update the `shared.yml` file in the inventory file to match your infrastructure settings. Please be sure to update or review the following variables:
