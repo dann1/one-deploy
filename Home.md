@@ -12,9 +12,9 @@ The documentation is organized based on three distinct architectures. We will st
 * [Release notes](https://github.com/OpenNebula/one-deploy/releases)
 * [Using the playbooks](sys_use)
 * Reference Architecture Cloud Deployments
-  * [Single front-end cloud based on local storage](arch_single_local)
-  * [Single front-end cloud based on shared storage](arch_single_shared)
-  * [Single front-end cloud based on Ceph storage](arch_single_ceph)
+  * [Single front-end cloud and local storage](arch_single_local)
+  * [Single front-end cloud and shared storage](arch_single_shared)
+  * [Single front-end cloud and Ceph storage](arch_single_ceph)
 * [Verifying the installation](sys_verify)
 * Advance Configurations
   * [Highly-available Front-end](arch_ha)
