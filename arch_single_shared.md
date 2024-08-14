@@ -9,7 +9,7 @@ This scenario is a variation of the [local storage](arch_single_local) setup. He
 </p>
 
 > [!NOTE]
-> The playbook assumes that you have already configured and mounted the NFS shares in all the servers.
+> The playbook assumes that you have already a working NFS server available in your cloud.
 
 ## Storage
 
@@ -18,19 +18,13 @@ This scenario is a variation of the [local storage](arch_single_local) setup. He
 The NFS/NAS server is configured to export the datastore folders to the hosts in the OpenNebula cloud. In this example we assume that the following structure is created in the NFS/NAS sever:
 
 ```
-root@nfs-server:/# ls -ln /srv
+root@nfs-server:/# ls -ln /storage
 total 0
-drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 0
-drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 1
-drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 2
+drwxr-xr-x 2 9869 9869 6 Jun 26 17:55 one_datastores
 ```
 
 > [!IMPORTANT]
 > The ownership of the folders **MUST** be 9869 as this is the UID/GID assigned to the `oneadmin` account during the installation.
-
-
-> [!IMPORTANT]
-> The files & kernels datastore (folder `/srv/2`, in the example) will be only mounted in the front-end; hosts will always use local storage for this datastore.
 
 This folder is exported to the OpenNebula servers, for example:
 
@@ -41,56 +35,21 @@ This folder is exported to the OpenNebula servers, for example:
 #
 # Use exportfs -r to reread
 # /export	192.168.1.10(rw,no_root_squash)
-/srv 172.20.0.0/24(rw,soft,intr,async)
-```
-**After running the playbook** you will see the following set up in the front-end:
-```
-root@ubuntu2204-17:~# ls -l /var/lib/one/datastores/
-total 4
-lrwxrwxrwx 1 root     root        7 Jun 27 11:12 1 -> /mnt/1/
-drwxr-xr-x 2 oneadmin oneadmin 4096 Jun 27 11:09 2
-```
-
-### NFS client configuration
-
-In this example all servers (front-end and hosts) mounts the NFS shared under the `/mnt` folder:
-```
-root@ubuntu2204-17:/# ls -la /mnt/
-total 4
-drwxr-xr-x  5 root root   33 Jun 26 15:58 .
-drwxr-xr-x 18 root root 4096 Jun 27 09:30 ..
-drwxr-xr-x  2 9869 9869    6 Jun 26 15:55 0
-drwxr-xr-x  2 9869 9869    6 Jun 26 15:55 1
-drwxr-xr-x  2 9869 9869    6 Jun 26 15:55 2
-```
-
-**After running the playbook** you will see the following set up in the hosts:
-```
-root@ubuntu2204-18:~# ls -l /var/lib/one/datastores/
-total 0
-lrwxrwxrwx 1 root root 7 Jun 27 11:10 0 -> /mnt/0/
-lrwxrwxrwx 1 root root 7 Jun 27 11:10 1 -> /mnt/1/
+/storage/one_datastores 172.20.0.0/24(rw,soft,intr,async)
 ```
 
 ### Inventory
 
-The following snippet shows the configuration required to use the `shared` storage using the above mount points:
+The following snippet shows the configuration required to use the `shared` storage using the above NFS share (assuming the NFS server is at 172.20.0.1):
 
 ```yaml
-ds:
-  mode: shared
-  config:
-    mounts:
-    - type: system
-      path: /mnt/0
-    - type: image
-      path: /mnt/1
-    - type: file
-      path: /mnt/2
+    ds: { mode: shared }
+
+    fstab:
+      - src: "172.20.0.1:/storage/one_datastores"
 ```
 
-> [!NOTE]
-> File (`/mnt/2`) will only be symlinked in the front-end
+By default the share is mounted in `/var/lib/one/datastores/`, but this behavior can be changed so any type of `/etc/fstab` entry should be possible to configure, see additional examples below.
 
 ## Networking
 
@@ -109,24 +68,14 @@ The following file show the complete settings to install a single front-end with
 all:
   vars:
     ansible_user: root
-    one_version: '6.6'
+    one_version: '6.10'
     one_pass: opennebulapass
-    ds:
-      mode: shared
-      config:
-        mounts:
-        - type: system
-          path: /mnt/0
-        - type: image
-          path: /mnt/1
-        - type: file
-          path: /mnt/2
+
     vn:
-      admin_net:
+      service:
         managed: true
         template:
           VN_MAD: bridge
-          PHYDEV: eth0
           BRIDGE: br0
           AR:
             TYPE: IP4
@@ -137,6 +86,11 @@ all:
           GATEWAY: 172.20.0.1
           DNS: 1.1.1.1
 
+    ds: { mode: shared }
+
+    fstab:
+      - src: "172.20.0.1:/storage/one_datastores"
+
 frontend:
   hosts:
     f1: { ansible_host: 172.20.0.6 }
@@ -145,99 +99,6 @@ node:
   hosts:
     n1: { ansible_host: 172.20.0.7 }
     n2: { ansible_host: 172.20.0.8 }
-```
-
-## Mounting NFS shares (or other filesystems)
-
-Since the release `1.2.0` it has become possible to mount and persist (in `/etc/fstab`) arbitrary filesystems, the interface is really simple:
-
-```yaml
----
-all:
-  vars:
-    ansible_user: root
-    ensure_keys_for: [root]
-    ensure_hosts: true
-    update_pkg_cache: true
-    unattend_disable: true
-
-    one_pass: asd
-    one_version: '6.10'
-    one_vip: 10.2.50.86
-    one_vip_cidr: 24
-    one_vip_if: br0
-
-    vn:
-      service:
-        managed: true
-        template:
-          VN_MAD: bridge
-          BRIDGE: br0
-          AR:
-            TYPE: IP4
-            IP: 10.2.50.200
-            SIZE: 48
-          NETWORK_ADDRESS: 10.2.50.0
-          NETWORK_MASK: 255.255.255.0
-          GATEWAY: 10.2.50.1
-          DNS: 10.2.50.1
-
-    ds: { mode: shared }
-
-    fstab:
-      - src: "10.2.50.1:/var/lib/one/datastores"
-
-frontend:
-  hosts:
-    n1a1: { ansible_host: 10.2.50.10 }
-    n1a2: { ansible_host: 10.2.50.11 }
-
-node:
-  hosts:
-    n1b1: { ansible_host: 10.2.50.20 }
-    n1b2: { ansible_host: 10.2.50.21 }
-```
-
-Assuming the `10.2.50.1:/var/lib/one/datastores` is a NFS share that can be attached to all machines from the `frontend` and `node` groups, the yaml snippet below does exactly that:
-
-```yaml
-    ds: { mode: shared }
-
-    fstab:
-      - src: "10.2.50.1:/var/lib/one/datastores"
-```
-
-By default the share is mounted in `/var/lib/one/datastores/`, but this behavior can be changed so any type of `/etc/fstab` entry should be possible to configure, for example:
-
-```yaml
-    ds:
-      mode: shared
-      config:
-        mounts:
-          - type: system
-            path: /mnt/0
-          - type: image
-            path: /mnt/1
-          - type: file
-            path: /mnt/2
-
-    fstab:
-      - src: "10.2.50.1:/shared"
-        path: /mnt
-        fstype: nfs
-        opts: rw,relatime,comment=one-deploy
-```
-
-It's also perfectly viable to define different `fstab` lists for each distinct inventory hostname, group or subgroup:
-
-```yaml
-frontend:
-  vars:
-    fstab:
-      - src: "10.2.50.1:/var/lib/one/datastores"
-  hosts:
-    n1a1: { ansible_host: 10.2.50.10 }
-    n1a2: { ansible_host: 10.2.50.11 }
 ```
 
 ## Running the Ansible Playbook
@@ -256,3 +117,53 @@ ansible -i inventory/shared.yml all -m ping -b
 ansible-playbook -i inventory/shared.yml opennebula.deploy.main
 ```
 Once the execution of the playbook finish your new OpenNebula cloud is ready. [You can now head to the verification guide](sys_verify).
+
+## Additional NFS Configuration Options
+
+Playbooks support the setup of any type of `fstab` entry, and includes helpers to automatically link NFS folders to datastore folders. For example, you can use multiple NFS servers for different datastores:
+
+```yaml
+    ds:
+      mode: shared
+      config:
+        mounts:
+          - type: system
+            path: /mnt_nfs1/0
+          - type: image
+            path: /mnt_nfs2/1
+          - type: file
+            path: /mnt_nfs1/2
+
+    fstab:
+      - src: "10.2.50.1:/shared_one"
+        path: /mnt_nfs1
+        fstype: nfs
+        opts: rw,soft,intr,rsize=32768,wsize=32768
+
+      - src: "10.2.50.33:/shared_one"
+        path: /mnt_nfs2
+        fstype: nfs
+        opts: rw,soft,intr,rsize=32768,wsize=32768
+```
+
+**After running the playbook** you will see the following set up in the hosts:
+```
+root@ubuntu2204-18:~# ls -l /var/lib/one/datastores/
+total 0
+lrwxrwxrwx 1 root root 7 Jun 27 11:10 0 -> /mnt_nfs1/0/
+lrwxrwxrwx 1 root root 7 Jun 27 11:10 1 -> /mnt_nfs2/1/
+```
+> [!NOTE]
+> File (`/mnt/nfs_1/2`) will only be symlinked in the front-end
+
+It's also perfectly viable to define different `fstab` lists for each distinct inventory hostname, group or subgroup as well:
+
+```yaml
+frontend:
+  vars:
+    fstab:
+      - src: "10.2.50.1:/var/lib/one/datastores"
+  hosts:
+    n1a1: { ansible_host: 10.2.50.10 }
+    n1a2: { ansible_host: 10.2.50.11 }
+```
