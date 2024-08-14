@@ -2,7 +2,7 @@
 
 # Single Front-end & Local Storage
 
-In this scenario we will have a single front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let’s us review some the main components.
+In this scenario we will have a single front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let us review some of the main components.
 <p align="center">
 <img src="images/arch_local.png" width="60%">
 </p>
