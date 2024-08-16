@@ -19,7 +19,7 @@ It's possible to pre-install all requirements in a python virtualenv through use
 
 1. `apt install python3-pip`
 2. `pip3 install poetry`
-3. `git clone git@github.com:OpenNebula/one-deploy.git`
+3. `git clone https://github.com/OpenNebula/one-deploy.git`
 4. `cd ./one-deploy/ && make requirements`
 
 Then you can use poetry to inspect and use the virtual environment, for example:
