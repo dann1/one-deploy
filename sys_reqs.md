@@ -6,7 +6,7 @@ The playbooks are tested and verified on the following systems:
 
 | Platform               | Notes                    |
 | ---------------------- | ------------------------ |
-| Ubuntu 22.04           | Netplan version >= 0.105 |
+| Ubuntu 22.04, 24.04    | Netplan version >= 0.105 |
 | RHEL 9 and derivatives | NetworkManager required  |
 
 # Requirements
