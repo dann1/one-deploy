@@ -2,7 +2,7 @@
 
 # Single Front-end & Shared Storage
 
-This scenario is a variation of the [local storage](arch_single_local) setup. Here, the storage for virtual machines (VMs) and the image repository are provided by a NFS/NAS server. Running VMs directly from shared storage can enhance the fault tolerance of the system in the event of a host failure, although it comes with the drawback of increased I/O latency.
+This scenario is a variation of the [local storage](arch_single_local) setup. Here, the storage for virtual machines (VMs) and the image repository are provided by an NFS/NAS server. Running VMs directly from shared storage can enhance the fault tolerance of the system in the event of a host failure, albeit with the drawback of increased I/O latency.
 
 <p align="center">
 <img src="images/arch_shared.png" width="60%">
@@ -49,7 +49,7 @@ The following snippet shows the configuration required to use the `shared` stora
       - src: "172.20.0.1:/storage/one_datastores"
 ```
 
-By default the share is mounted in `/var/lib/one/datastores/`, but this behavior can be changed so any type of `/etc/fstab` entry should be possible to configure, see additional examples below.
+By default the share is mounted in `/var/lib/one/datastores/`, but this behavior can be changed so any type of `/etc/fstab` entry should be possible to configure; see additional examples below.
 
 ## Networking
 
@@ -61,7 +61,7 @@ To [configure the front-end services](arch_single_local#opennebula-front-end--se
 
 ## The complete inventory file
 
-The following file show the complete settings to install a single front-end with two hosts using shared storage:
+The following file show the complete settings to install a single Front-end with two Hosts using shared storage:
 
 ```yaml
 ---
@@ -104,8 +104,8 @@ node:
 ## Running the Ansible Playbook
 
 * **1. Prepare the inventory file**: Update the `shared.yml` file in the inventory file to match your infrastructure settings. Please be sure to update or review the following variables:
-  - `ansible_user`, update it if different from root.
-  - `one_pass`, change it to the password for the oneadmin account
+  - `ansible_user`, update it if different from root
+  - `one_pass`, change it to the password for the `oneadmin` account
   - `one_version`, be sure to use the latest stable version here
 
 * **2. Check the connection**: Verify the network connection, ssh and sudo configuration run the following command:
@@ -116,11 +116,11 @@ ansible -i inventory/shared.yml all -m ping -b
 ```shell
 ansible-playbook -i inventory/shared.yml opennebula.deploy.main
 ```
-Once the execution of the playbook finish your new OpenNebula cloud is ready. [You can now head to the verification guide](sys_verify).
+After execution of the playbook is finished, your new OpenNebula cloud is ready. [You can now head to the verification guide](sys_verify).
 
 ## Additional NFS Configuration Options
 
-Playbooks support the setup of any type of `fstab` entry, and includes helpers to automatically link NFS folders to datastore folders. For example, you can use multiple NFS servers for different datastores:
+The playbooks support the setup of any type of `fstab` entry, and include helpers to automatically link NFS folders to datastore folders. For example, you can use multiple NFS servers for different datastores:
 
 ```yaml
     ds:
@@ -156,7 +156,7 @@ lrwxrwxrwx 1 root root 7 Jun 27 11:10 1 -> /mnt_nfs2/1/
 > [!NOTE]
 > File (`/mnt/nfs_1/2`) will only be symlinked in the front-end
 
-It's also perfectly viable to define different `fstab` lists for each distinct inventory hostname, group or subgroup as well:
+It's also perfectly viable to define different `fstab` lists for each distinct inventory hostname, group or subgroup:
 
 ```yaml
 frontend:
