@@ -2,13 +2,13 @@
 
 # Single Front-end & Local Storage
 
-In this scenario we will have a single front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let us review some of the main components.
+In this scenario we will have a single Front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let us review some of the main components.
 <p align="center">
 <img src="images/arch_local.png" width="60%">
 </p>
 
 ## Storage
-Virtual disk images are stored in local storage, with the front-end hosting an image repository (image datastore). These images are subsequently transferred from the front-end to the hypervisors to initiate the virtual machines (VMs). Both the front-end and hypervisors utilize the directory `/var/lib/one/datastores` to store these images. It is possible to either utilize the root file system (FS) for this directory or symlink from any other location.
+Virtual disk images are stored in local storage, with the Front-end hosting an image repository (image datastore). These images are subsequently transferred from the Front-end to the hypervisors to initiate the Virtual Machines (VMs). Both the front-end and hypervisors utilize the directory `/var/lib/one/datastores` to store these images. It is possible to either utilize the root file system (FS) for this directory or symlink from any other location.
 
 
 The following snippet shows the configuration required if no mount points are used:
@@ -54,16 +54,16 @@ $ tree /var/lib/one/datastore/
 
 ## Networking
 
-The most basic network configuration is a flat network (bridged). We will use the main interface of the Host to connect the VMs to the Network. The interfaces used in this mode are depicted in the following picture:
+The most basic network configuration is a flat network (bridged). We will use the main interface on the Host to connect the VMs to the Network. The interfaces used in this mode are depicted in the following picture:
 
 <img src="images/arch_net.png" width="60%" align="right">
 
 > [!NOTE]
 > The playbook requires either Netplan or NetworkManager to be present in the Hosts to perform the initial configuration.
 
-To create the virtual network for the VMs you need to pick up some IP. These IP addresses need to be reachable through the Network used by the main interface of the host, as the VM traffic will be forwarded through it.
+To create the virtual network for the VMs you need to pick up some IP. These IP addresses need to be reachable through the Network used by the main interface of the Host, as the VM traffic will be forwarded through it.
 
-The following snippet shows how to define a virtual network using some IPs in the Admin Network (the one used by the hosts):
+The following snippet shows how to define a virtual network using some IPs in the `admin_net` Network used by the hosts:
 
 ```yaml
 vn:
@@ -83,7 +83,7 @@ vn:
         DNS: 1.1.1.1
 ```
 
-If there is any other interface in the hosts you can use them. For example to define a dedicated VM network using bon0 and vxlan networking:
+If there is any other interface in the hosts you can use them. For example to define a dedicated VM network using `bon0` and vxlan networking:
 
 ```yaml
 vn:
@@ -109,7 +109,7 @@ vn:
 
 ## OpenNebula Front-end & Services
 
-The Ansible playbook installs a complete suite of OpenNebula services including the base daemons (oned and scheduler), the OpenNebula Flow and Gate services and Sunstone Web-UI. You can just select the OpenNebula version to install and a pick a password for oneadmin
+The Ansible playbook installs a complete suite of OpenNebula services including the base daemons (`oned` and scheduler), the OpenNebula Flow and Gate services and Sunstone Web-UI. You can just select the OpenNebula version to install and pick a password for the `oneadmin` user.
 
 ```yaml
 all:
@@ -155,7 +155,7 @@ all:
 
 ## The complete inventory file
 
-The following file show the complete settings to install a single front-end with two hosts using local storage:
+The following file show the complete settings to install a single Front-end with two hosts using local storage:
 
 ```yaml
 ---
@@ -195,11 +195,11 @@ node:
 ## Running the Ansible Playbook
 
 * **1. Prepare the inventory file**: Update the `local.yml` file in the inventory file to match your infrastructure settings. Please be sure to update or review the following variables:
-  - `ansible_user`, update it if different from root.
+  - `ansible_user`, update it if different from root
   - `one_pass`, change it to the password for the oneadmin account
   - `one_version`, be sure to use the latest stable version here
 
-* **2. Check the connection**: Verify the network connection, ssh and sudo configuration run the following command:
+* **2. Check the connection**: To verify the network connection, ssh and sudo configuration run the following command:
 ```shell
 ansible -i inventory/local.yml all -m ping -b
 ```
@@ -207,4 +207,4 @@ ansible -i inventory/local.yml all -m ping -b
 ```shell
 ansible-playbook -i inventory/local.yml opennebula.deploy.main
 ```
-Once the execution of the playbook finish your new OpenNebula cloud is ready. [You can now head to the verification guide](sys_verify).
+After execution of the playbook is finished, your new OpenNebula cloud is ready. [You can now head to the verification guide](sys_verify).
