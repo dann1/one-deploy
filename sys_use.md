@@ -26,7 +26,7 @@ $ stat ./ansible_collections/opennebula/deploy
 > [!NOTE]
 > That effectively allows you to use files cloned from git as a "local" galaxy collection.
 
-You can either use included Makefile or enter ansible-playbook commands directly.
+You can either use the included Makefile or enter `ansible-playbook` commands directly.
 
 To use this repo:
 
@@ -66,7 +66,7 @@ $ ansible-playbook -i inventory/example.yml opennebula.deploy.main -t bastion,pr
 
 ## Ansible Galaxy Collection
 
-Although we initially pushed pre-release `0.1.0` to [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula), we no longer wish to maintain it. Instead we recommend using [much cleaner method](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#installing-a-collection-from-a-git-repository).
+Although we initially pushed pre-release `0.1.0` to [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula), we no longer wish to maintain it. Instead we recommend using this [much cleaner method](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#installing-a-collection-from-a-git-repository).
 
 To install the `opennebula.deploy` collection directly from GitHub, execute:
 
