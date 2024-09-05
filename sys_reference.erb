@@ -1,0 +1,21 @@
+[//]: # ( vim: set nowrap : )
+
+# Playbook reference
+
+## Playbooks
+
+| Name / Link | Description |
+|-------------|-------------|
+| `opennebula.deploy.ceph`  [&#x1F517;](<%= one_deploy_url %>playbooks/ceph.yml)  | Pre-deploys Ceph clusters with [ceph-ansible](https://github.com/ceph/ceph-ansible). |
+| `opennebula.deploy.infra` [&#x1F517;](<%= one_deploy_url %>playbooks/infra.yml) | Pre-deploys Front-ends as VMs **directly** in Libvirt.                               |
+| `opennebula.deploy.main`  [&#x1F517;](<%= one_deploy_url %>playbooks/main.yml)  | Combines `opennebula.deploy.pre` and `opennebula.deploy.site` playbooks.             |
+| `opennebula.deploy.pre`   [&#x1F517;](<%= one_deploy_url %>playbooks/pre.yml)   | Runs pre-checks and some operations that are not part of the main deployment.        |
+| `opennebula.deploy.site`  [&#x1F517;](<%= one_deploy_url %>playbooks/site.yml)  | Runs the actual deployment.                                                          |
+
+## Roles
+
+| Name / Link | Description |
+|-------------|-------------|
+<%- parsed.each do |title, descr, hyper| -%>
+| `<%= title %>` [&#x1F517;](<%= hyper %>) | <%= descr %> |
+<%- end -%>
