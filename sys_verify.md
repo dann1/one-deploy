@@ -136,4 +136,4 @@ rtt min/avg/max/mdev = 1.069/1.098/1.128/0.029 ms
 
 As part of the deployment, the Sunstone web interface is installed in the OpenNebula Front-end. You can check that it is up and running by pointing your browser to the Front-end IP on port 2616, for example `http://172.20.0.7:2616`. Log in as user `oneadmin`, using the password supplied in the inventory file (`opennebulapass` parameter). You should see the Sunstone Dashgoard:
 
-[[images/sunstone.png|Sunstone main dashboard]]
+[[images/sunstone-dashboard.png|Sunstone main dashboard]]
