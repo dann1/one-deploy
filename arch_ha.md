@@ -4,12 +4,12 @@
 
 ## Architecture
 
-In order to deploy the OpenNebula front-ends in a HA mode you'll need at least 3 (odd number of front-ends to reach consensus). For these servers you need to consider:
+To deploy OpenNebula Front-ends in High Availability (HA) mode, you need at least three Front-ends, the minimum odd number to reach consensus. For these servers you will need to consider:
 
-* The front-ends may run as virtual machines. You need to provision those directly from libvirt/QEMU or any other virtualization platform.
+* The Front-ends can run as Virtual Machines (VMs). In this case you need to provision them directly from libvirt/QEMU or any other virtualization platform.
 * The OpenNebula services will be reached through a Virtual IP (VIP). This IP will float to the active leader automatically.
-* This configuration is compatible with any storage configuration [shared](arch_single_shared) or [local](arch_single_local)
-* The front-ends needs to share the image repository. You need to mount the NFS share, then include the mount point in the inventory file as described in the [shared](arch_single_shared) or [local](arch_single_local) guides.
+* This configuration is compatible with any storage configuration, [shared](arch_single_shared) or [local](arch_single_local).
+* The Front-ends will need to share the image repository. You need to mount the NFS share, then include the mount point in the inventory file as described in the [shared](arch_single_shared) or [local](arch_single_local) guides.
 
 <p align="center">
 <img src="images/arch_ha.png" width="60%">
@@ -43,9 +43,9 @@ ZONE TEMPLATE
 ENDPOINT="http://localhost:2633/RPC2
 ```
 
-## Deployment
+## Deploying
 
-To deploy a cluster, it's enough to provide VIP configuration and multiple Front-end machines in the inventory file:
+To deploy a cluster, it's enough to provide the VIP configuration and multiple Front-end machines in the inventory file:
 
 ```yaml
 all:
@@ -64,7 +64,7 @@ frontend:
 ```
 
 > [!NOTE]
-> All `one_vip*` parameters are strictly required for HA mode to work, i.e. inside the **Leader** Front-end you will **always** find:
+> For HA mode to work, all of the `one_vip*` parameters are strictly required, i.e. inside the *Leader* Front-end you will *always* find:
 
 ```
 root@n1a1:~# ip address show eth0
@@ -91,7 +91,7 @@ frontend:
     n1a1: { ansible_host: 10.2.50.10 }
 ```
 
-Then later, when you decide you want true HA, you can simply increase the number of Front-end machines and re-run the automation:
+Later, when you decide to implement true HA, you can simply increase the number of Front-end machines and re-run the automation:
 
 ```yaml
 frontend:
@@ -105,11 +105,11 @@ frontend:
 > Conversion from non-HA to HA is not implemented in this automation, please plan ahead!
 
 > [!NOTE]
-> We support scaling **UP** only, as the reverse operation seems to be uncommon (you can still do it manually!).
+> We support scaling **UP** only, as the reverse operation seems to be uncommon (you can still do it manually).
 
 ## RSYNC/SSH keys
 
-It's important to mention that adding extra Front-end machines requires synchronization of the OpenNebula Database and `/var/lib/one/{.one,.ssh}/` folders. All this happens automatically, but needs password-less login, so Ansible can utilize `rsync/ssh` to copy all required files from the Leader to new Followers (directly!). You can use `ssh-agent` or provision SSH keys yourself or use the `ensure_keys_for` parameter to generate them automatically:
+It's important to mention that adding extra Front-end machines requires synchronization of the OpenNebula Database and the `/var/lib/one/{.one,.ssh}/` folders. This is performed automatically, but requires password-less login to enable Ansible to use `rsync` or `ssh` to copy all required files from the Leader directly to new Followers. To can generate SSH keys with `ssh-agent`, provide them manually, or generate them automatically by using the `ensure_keys_for` parameter:
 
 ```yaml
 all:
