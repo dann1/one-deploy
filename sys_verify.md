@@ -2,11 +2,18 @@
 
 # Verifying the Installation
 
-The following guide provides a quick tour of your new installed system. This system has been created using the inventory files showed in the examples, so you may need to adapt IPs and host names to your infrastructure.
+This page is a quick guide for verifying your OpenNebula cloud installed with `one-deploy`. The cloud was created using the inventory files showed in the examples, so you may need to adapt IPs and host names to your infrastructure.
 
 ## Check the OpenNebula Resources
 
-Let's first check the hosts, ssh into the frontend and check the hosts registered in OpenNebula. Verify that `STAT` is `on` and not `err`:
+To check the hypervisor nodes, first ssh into the Front-end. Then, become the `oneadmin` user and verify the hosts registered in OpenNebula. Run these commands:
+
+```
+sudo -i -u oneadmin
+onehost list
+```
+
+Sample output below. Verify that `STAT` is `on` and not `err`:
 
 ```
 root@ubuntu2204-14:~# sudo -i -u oneadmin
@@ -16,7 +23,14 @@ oneadmin@ubuntu2204-14:~$ onehost list
    0 172.20.0.8                                         default      0       0 / 100 (0%)     0K / 1.4G (0%) on
 ```
 
-Similarly you can check the datastores. Note that all datastores are using `ssh` drivers.:
+Similarly, you can check the datastores with:
+
+```
+onedatastore list
+```
+
+In the output below, note that the `TM` column shows that all datastores use `ssh` drivers:
+
 ```
 oneadmin@ubuntu2204-14:~$ onedatastore list
   ID NAME                                                      SIZE AVA CLUSTERS IMAGES TYPE DS      TM      STAT
@@ -26,9 +40,16 @@ oneadmin@ubuntu2204-14:~$ onedatastore list
 ```
 
 > [!NOTE]
-> If you deployed shared storage look for `shared` TM in `system` and `default` datastores.
+> If you deployed using shared storage, the `TM` column should display `shared` for the `system` and `default` datastores.
 
-And finally the virtual networks created as part of the deployment:
+Finally, check the virtual networks created as part of the deployment:
+
+```
+onevnet list
+```
+
+In the output, ensure that the `STATE` column displays "ready" (`rdy`):
+
 ```
 oneadmin@ubuntu2204-14:~$ onevnet list
   ID USER     GROUP    NAME                            CLUSTERS   BRIDGE            STATE        LEASES OUTD ERRO
@@ -38,9 +59,15 @@ oneadmin@ubuntu2204-14:~$ onevnet list
 ## Import a Marketplace Appliance
 
 > [!NOTE]
-> This require the front-end to have Internet access properly configured
+> This requires internet access for the Front-end.
 
-Let's download an alpine image from the OpenNebula MarketPlace so we can later create some test VMs:
+To create a test VM, first download an image from the OpenNebula Marketplace, in this case an Alpine Linux image:
+
+```
+onemarketapp export -d default 'Alpine Linux 3.17' alpine
+```
+
+The image will be downloaded and assigned ID `0`:
 
 ```
 oneadmin@ubuntu2204-14:~$ onemarketapp export -d default 'Alpine Linux 3.17' alpine
@@ -50,28 +77,51 @@ VMTEMPLATE
     ID: 0
 ```
 
-Before proceeding let's wait for the alpine image to be in ready state, time will vary depending on your Internet connection speed:
+Verify that the Alpine image is ready, running:
+
+```
+oneimage list
+```
+
+In the output, verify that the `STAT` column displays `rdy`:
+
 ```
 oneadmin@ubuntu2204-14:~$ oneimage list
   ID USER     GROUP    NAME                                                 DATASTORE     SIZE TYPE PER STAT RVMS
    0 oneadmin oneadmin alpine                                               default       256M OS    No rdy     0
 ```
+
 ## Create a Test VM
 
-Finally, let's create a VM based on the Alpine template. Also, we will attach the VM to the `admin_net` network:
+Finally, create a VM based on the Alpine template, attaching it to the `admin_net` network:
+
 ```
-oneadmin@ubuntu2204-14:~$  onetemplate instantiate --nic admin_net alpine
+onetemplate instantiate --nic admin_net alpine
+```
+
+Output should display the ID for the VM, in this case `0`:
+
+```
+oneadmin@ubuntu2204-14:~$ onetemplate instantiate --nic admin_net alpine
 VM ID: 0
 ```
 
-Now, wait for the VM to reach the running state (you can use `onevm top`):
+Wait for the VM to reach the `running`. You can check with:
+
 ```
-onevm list
+onevm top
+```
+
+Verify that `STAT` displays `runn`:
+
+```
+onevm top
   ID USER     GROUP    NAME                                 STAT  CPU     MEM HOST                           TIME
    0 oneadmin oneadmin alpine-0                             runn    1    128M 172.20.0.9                 0d 01h50
 ```
 
-Finally, verify VM connectivity. The VM will be using the first IP in the range, 172.20.0.100 in our example (adjust as needed):
+Finally, verify VM connectivity. In this example the VM will be using the first IP in the virtual network range, 172.20.0.100:
+
 ```
 oneadmin@ubuntu2204-14:~$ ping -c 2 172.20.100
 PING 172.20.100 (172.20.0.100) 56(84) bytes of data.
@@ -82,7 +132,7 @@ PING 172.20.100 (172.20.0.100) 56(84) bytes of data.
 2 packets transmitted, 2 received, 0% packet loss, time 1002ms
 rtt min/avg/max/mdev = 1.069/1.098/1.128/0.029 ms
 ```
-## Check the Sunstone Web-UI
+## Check the Sunstone Web UI
 
 You can use the Suntone web interface by pointing your browser to the front-end IP and port 9869 (`http://172.20.0.7:9869`). After login using the `oneadmin` account and the password included in the inventory file, you will see the main dashboard:
 
