@@ -2,13 +2,13 @@
 
 # VXLAN/EVPN Networking
 
-OpenNebula supports VXLAN-based VNETs in both `multicast` and `evpn` modes, you can learn more about it here at [Using VXLAN with BGP EVPN](https://docs.opennebula.io/stable/open_cluster_deployment/networking_setup/vxlan.html#using-vxlan-with-bgp-evpn).
+OpenNebula supports VXLAN-based VNETs in both multicast and EVPN modes. To learn more, please see the documentation at [Using VXLAN with BGP EVPN](https://docs.opennebula.io/stable/open_cluster_deployment/networking_setup/vxlan.html#using-vxlan-with-bgp-evpn).
 
-To establish the BGP/EVPN Control Plane in one-deploy we use the [FRR/EVPN](https://docs.frrouting.org/en/latest/evpn.html) routing service.
+To establish the BGP/EVPN Control Plane in `one-deploy` we use the [FRR/EVPN](https://docs.frrouting.org/en/latest/evpn.html) routing service.
 
 ## Architecture
 
-The hypervisors runs FRR routing daemons to send BGP updates with the MAC address and IP (optional) for each VXLAN tunnel endpoint (VTEP). The updates are distributed to all the hypervisors using one or more BGP route reflectors (RR). The following diagram shows the main components of the architecture.
+The hypervisors run FRR routing daemons to send BGP updates with the MAC address and IP (optional) for each VXLAN tunnel endpoint (VTEP). The updates are distributed to all the hypervisors using one or more BGP route reflectors (RR). The following diagram shows the main components of the architecture:
 
 
 ```
@@ -33,7 +33,7 @@ The hypervisors runs FRR routing daemons to send BGP updates with the MAC addres
 
 ## Ansible Role
 
-A full HA config example could look like this:
+Below is a complete sample HA config file:
 
 ```yaml
 ---
@@ -85,9 +85,9 @@ node:
 ```
 
 > [!WARNING]
-> The `evpn` feature is currently unsupported in the **parallel** federated deployment type in one-deploy.
+> OneDeploy currently does not support the `evpn` feature for Federated Front-ends deployed through with the **parallel** deployment type.
 
-To enable the `evpn` feature you need to adjust the `features` dictionary and define the `router` inventory group (machines defined in the `router` group will be basically configured as BGP Route Reflectors):
+To enable the `evpn` feature, you will need to adjust the `features` dictionary and define the `router` inventory group. Machines defined in the `router` group will be basically configured as BGP Route Reflectors:
 
 ```yaml
 all:
@@ -101,12 +101,12 @@ router:
 ```
 
 > [!NOTE]
-> If you don't define the `router` group, then you can actually set the `evpn_rr_servers = [1.2.3.4, 2.3.4.5]` variable manually and reuse existing Route Reflectors (unmanaged by one-deploy).
+> If you don't define the `router` group, then you can manually set the `evpn_rr_servers = [1.2.3.4, 2.3.4.5]` variable and reuse preexisting Route Reflectors (unmanaged by OneDeploy).
 
 > [!WARNING]
-> If your `frontend` and `node` groups share some machines, then please do **not** add those to the `router` group. BGP configuration of Route Reflectors and VTEP nodes differs significantly and is difficult to merge, for simplicity, we've decided not to do it.
+> If your `frontend` and `node` groups share some machines, then please do **not** add these machines to the `router` group. BGP configuration of Route Reflectors and VTEP nodes differs significantly and is difficult to merge; for simplicity this is not supported.
 
-Enabling the `evpn` feature makes sense only if you use VXLAN VNETs in OpenNebula, here's an example:
+Enabling the `evpn` feature makes sense only if you use VXLAN VNETs in OpenNebula, as in the example below:
 
 ```yaml
 all:
@@ -132,12 +132,13 @@ all:
 ```
 
 > [!IMPORTANT]
+> The attribute `VXLAN_MODE: evpn` **must** be present in the VNET definition (otherwise there would be no point in enabling the `evpn` feature). Using the attribute `IP_LINK_CONF: nolearning=` is recommended.
 > Attribute `VXLAN_MODE: evpn` (`IP_LINK_CONF: nolearning=` is recommended) **must** be used in the VNET definition, otherwise there is no point in enabling the `evpn` feature whatsoever.
 
 > [!WARNING]
-> Because VXLAN protocol header takes some space in each UDP packet you should decrease the MTU (`1450` is the usual value) in your VXLAN VNET definitions to accomodate.
+> Because the VXLAN protocol header uses some space in each UDP packet, you should decrease the MTU (`1450` is the usual value) in your VXLAN VNET definitions to accommodate.
 
-After providing all the above config you can provision your environment as usual:
+After providing the above configurations you can provision your environment as usual:
 
 ```shell
 $ make I=inventory/evpn0.yml
