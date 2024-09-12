@@ -1,10 +1,10 @@
 [//]: # ( vim: set wrap : )
 
-# Deployment via Bastion Host
+# Deploying via a Bastion Host
 
-In some cases direct access from Ansible controller to targets in the inventory is not possible or difficult. You can use the `bastion` role to construct custom SSH config out of your inventory, then provision your hosts automatically through a SSH jump host.
+In some cases, direct access from the Ansible controller to targets in the inventory is difficult or impossible. For these scenarios `one-deploy` provides the `bastion` role, which allows you to build a custom SSH configurations from your inventory, then provision your hosts automatically through an SSH jump host.
 
-## Preparing inventory
+## Preparing the Inventory
 
 To enable the `bastion` role you need to add several parameters to your inventory file:
 
@@ -17,7 +17,7 @@ all:
     one_vip: 10.2.50.86
 ```
 
-Where `env_name` is used to distinguish between different OpenNebula clusters and `-F inventory/.one-deploy/bastion.d/n1` points to the pre-generated SSH config used later by all plays during provisioning.
+The variable `env_name` is used to distinguish between different OpenNebula clusters. The argument `-F inventory/.one-deploy/bastion.d/n1` points to the pre-generated SSH config that will be used later by all plays during provisioning.
 
 
 ```yaml
@@ -41,11 +41,11 @@ grafana:
     n1a1: { ansible_host: n1a1 }
 ```
 
-The `bastion` group should contain a single host accessible from your Ansible controller. This host can for example be one of the Frontends or something completely from outside of the cluster.
+The `bastion` group should contain a single host accessible from your Ansible controller. This host can be one of the Front-ends, or something completely outside the cluster.
 
-## SSH configs
+## SSH Configs
 
-You can manage multiple clusters from a single inventory dir:
+You can manage multiple clusters from a single inventory directory:
 
 ```
 one-deploy$ find inventory/.one-deploy/ -type f
@@ -54,7 +54,7 @@ inventory/.one-deploy/bastion.d/n1
 inventory/.one-deploy/bastion
 ```
 
-Looking at `inventory/.one-deploy/bastion.d/n1`, resulting SSH config should be really straightforward to understand:
+Looking at `inventory/.one-deploy/bastion.d/n1`, the resulting SSH config is simple and straightforward:
 
 ```ssh-config
 
@@ -118,6 +118,6 @@ Host n1b2
 
 ```
 
-## SSH keys
+## SSH Keys
 
-The main requirement for all this to work, is that you can connect to the bastion host and then further to all host specified in the inventory. The easiest way to achieve that is to use `ssh-agent`, but you can also store private keys inside the bastion host (if you must).
+For this to work, the main requirement is that you can connect to the bastion host and then further to all host specified in the inventory. The easiest way to achieve this is to use `ssh-agent`, but you can also store private keys inside the bastion host (if you must).
