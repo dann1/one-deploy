@@ -2,12 +2,11 @@
 
 # Front-end VMs
 
-Instead of deploying OpenNebula Front-ends on bare metal machines directly, it is possible in one-deploy to first pre-create Libvirt VMs in the existing hypervisors and only then use them to create fully-operational OpenNebula Front-ends (HA).
+Instead of deploying OpenNebula Front-ends directly on bare-metal machines, using `one-deploy` you can first pre-create Libvirt VMs in the existing hypervisors, and only then use them to create fully-operational OpenNebula Front-ends (HA).
 
-This approach allows for reusing large bare metal machines dedicated for hypervisor workloads to also run OpenNebula Front-ends in a safe and standard way (simplifying the overal architecture).
+This approach allows for using large bare-metal machines dedicated for hypervisor workloads to also run OpenNebula Front-ends in a safe and standard way, simplifying the overall architecture.
 
-> [!NOTE]
-> One-deploy ships with both `opennebula.deploy.infra` playbook and `opennebula.deploy.infra` role designed to *bootstrap* Front-end VMs.
+In `one-deploy`, the functionality for bootstrapping Front-end VMs is provided by the `opennebula.deploy.infra` playbook and the `opennebula.deploy.infra` role.
 
 ## Inventory
 
