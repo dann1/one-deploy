@@ -2,11 +2,11 @@
 
 # Coding Style Guide
 
-## 1. Repository structure
+## 1. Repository Structure
 
 ### 1.1 The Collection
 
-The one-deploy project has been designed from the start to be an **Ansible Collection**, so it's convenient to install it using the `ansible-galaxy` CLI command. Ansible collection structure differs from a classic Ansible project, you can read more about it [here](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html).
+The `one-deploy` project has been designed from the start as an **Ansible Collection**, so it's convenient to install it using the `ansible-galaxy` CLI command. Ansible collection structure differs from a classic Ansible project, you can read more about it [here](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html).
 
 In [#10](https://github.com/OpenNebula/one-deploy/pull/10) we've merged Ceph support. The [ceph-ansible](https://github.com/ceph/ceph-ansible) repository (that we borrow roles from) is not a collection, so the integration had to be done via a git submodule with some awkward `ansible.cfg` setup:
 
