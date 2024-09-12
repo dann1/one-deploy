@@ -2,13 +2,15 @@
 
 # Front-end VMs
 
-Instead of deploying OpenNebula Front-ends directly on bare-metal machines, using `one-deploy` you can first pre-create Libvirt VMs in the existing hypervisors, and only then use them to create fully-operational OpenNebula Front-ends (HA).
-
-This approach allows for using large bare-metal machines dedicated for hypervisor workloads to also run OpenNebula Front-ends in a safe and standard way, simplifying the overall architecture.
+OneDeploy allows you to deploy OpenNebula Front-ends on Virtual Machines (VMs) on existing hypervisor hosts, instead of on bare-metal machines. You can pre-create Libvirt VMs on existing hypervisors, then use them to create fully-operational OpenNebula Front-ends (HA). This approach allows for using large bare-metal machines dedicated for hypervisor workloads to also run OpenNebula Front-ends in a safe and standard way, simplifying the overall architecture.
 
 In `one-deploy`, the functionality for bootstrapping Front-end VMs is provided by the `opennebula.deploy.infra` playbook and the `opennebula.deploy.infra` role.
 
-## Inventory
+## Pre-requisites
+
+You will need bare-metal hosts with Libvirt software pre-installed. These are the hosts where the OpenNebula Front-ends will be installed as VMs. You must install Libvirt prior to running the deployment. For example, in Ubuntu run `apt install -y libvirt-clients libvirt-daemon-system qemu-kvm` or `apt install opennebula-node-kvm`.
+
+## Populating the Inventory
 
 Taken directly from the `inventory/infra.yml` example:
 
@@ -20,7 +22,7 @@ all:
     ensure_keys_for: [root]
     ensure_hosts: true
     one_pass: opennebula
-    one_version: '6.8'
+    one_version: '6.10'
     ds: { mode: ssh }
     vn:
       service:
@@ -72,7 +74,9 @@ node:
     n1a2: { ansible_host: 10.2.50.11 }
 ```
 
-You can see this additional section in the inventory:
+### Parameters for the `infra` Inventory Group
+
+The inventory contains this additional section:
 
 ```yaml
 infra:
@@ -85,13 +89,17 @@ infra:
     n1a2: { ansible_host: 10.2.50.11 }
 ```
 
-- Members of the **infra** inventory group should be *bare metal hosts* to install Front-end VMs onto.
-- The *bare metal hosts* should have Libvirt software pre-installed (for example `apt install -y libvirt-clients libvirt-daemon-system qemu-kvm` or `apt install opennebula-node-kvm` in Ubuntu). This step is left to the user.
-- The `os_image_url` variable should point to an official OpenNebula image provided via the [OpenNebula Marketplace](https://marketplace.opennebula.io/appliance) or to some other compatible image that runs [OpenNebula Contextualization](https://github.com/OpenNebula/one-apps/wiki/linux_installation).
-- The `os_image_size` is needed for resizing (up) the QCOW2 images for each of the deployed Front-ends, *20G* is the default.
-- The `infra_bridge` is left to be pre-created by the user. One-deploy uses this bridge device to insert Libvirt's NICs into.
+Note that:
 
-Another important thing is definition of the context variables for the Front-end VMs:
+- Members of the `infra` inventory group should be *bare-metal hosts* to install Front-end VMs onto.
+- The *bare-metal hosts* should have Libvirt software pre-installed (see [Pre-requisites] above).
+- The `os_image_url` variable should point to an official OpenNebula image provided via the [OpenNebula Marketplace](https://marketplace.opennebula.io/appliance) or to some other compatible image that runs [OpenNebula Contextualization](https://github.com/OpenNebula/one-apps/wiki/linux_installation).
+- The `os_image_size` is needed for resizing (up) the QCOW2 images for each of the deployed Front-ends; the default is **20G**.
+- The `infra_bridge` must be pre-created by the user. OneDeploy will use this bridge device to insert Libvirt's NICs into.
+
+### Setting Context Variables for the Front-end VMs
+
+Another important aspect is providing the context variables for the VMs that will host the Front-ends:
 
 ```yaml
 frontend:
@@ -112,14 +120,14 @@ frontend:
     f2: { ansible_host: 10.2.50.101, infra_hostname: n1a2 }
 ```
 
-- The `context` dictionary above contains *minimal* set of attributes to make networking operational inside the Front-end VMs.
-- The `PASSWORD` context attribute sets the SSH password for the root user on the Frontend VM. Specify the desired password or remove the attribute completely in order to disable password-based root SSH access.
-- The `infra_hostname` must point to an inventory hostname from the **infra** group, this effectively means that the Front-end VM will be deployed on that *bare metal (infra) host*.
+- The `context` dictionary above contains the *minimal* set of attributes to make networking operational inside the Front-end VMs.
+- The `PASSWORD` context attribute sets the SSH password for the `root` user on the Frontend VM. Specify the desired password or remove the attribute completely in order to disable password-based SSH access for `root`.
+- The `infra_hostname` must point to an inventory hostname from the `infra` group. This effectively means that the Front-end VM will be deployed on that *bare-metal (infra) host*.
 
 > [!WARNING]
-> The `ansible_host` variable in the example above cannot be a DNS name, it **must** be an IPv4 address. It's used not only to access the Front-ends, but also to reconstruct MAC addresses. The `ETHx_MAC` variable **must** match the MAC defined in Libvirt and we simply reconstruct it like `ETH0_MAC='{{ context.ETH0_MAC | d("02:01:%02x:%02x:%02x:%02x" | format(*(context.ETH0_IP.split(".") | map("int")))) }}`.
+> The `ansible_host` variable in the example above cannot be a DNS name, it **must** be an IPv4 address. It's used not only to access the Front-ends, but also to reconstruct MAC addresses. The `ETHx_MAC` variable **must** match the MAC defined in Libvirt, which we simply reconstruct like so: `ETH0_MAC='{{ context.ETH0_MAC | d("02:01:%02x:%02x:%02x:%02x" | format(*(context.ETH0_IP.split(".") | map("int")))) }}`.
 
-And finally *bare metal hosts* can be reused as OpenNebula hypervisors:
+Lastly, *bare-metal hosts* can be reused as OpenNebula hypervisors:
 
 ```yaml
 node:
@@ -128,7 +136,7 @@ node:
     n1a2: { ansible_host: 10.2.50.11 }
 ```
 
-## Deployment
+## Deploying
 
 The deployment procedure here isn't much different from the usual one, it requires a single additional step:
 
