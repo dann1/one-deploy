@@ -92,7 +92,7 @@ infra:
 Note that:
 
 - Members of the `infra` inventory group should be *bare-metal hosts* to install Front-end VMs onto.
-- The *bare-metal hosts* should have Libvirt software pre-installed (see **Pre-requisites** above).
+- The *bare-metal hosts* should have Libvirt software pre-installed (see [Pre-requisites](arch_infra#pre-requisites) above).
 - The `os_image_url` variable should point to an official OpenNebula image provided via the [OpenNebula Marketplace](https://marketplace.opennebula.io/appliance) or to some other compatible image that runs [OpenNebula Contextualization](https://github.com/OpenNebula/one-apps/wiki/linux_installation).
 - The `os_image_size` is needed for resizing (up) the QCOW2 images for each of the deployed Front-ends; the default is **20G**.
 - The `infra_bridge` must be pre-created by the user. OneDeploy will use this bridge device to insert Libvirt's NICs into.
