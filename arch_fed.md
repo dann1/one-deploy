@@ -2,10 +2,10 @@
 
 # Federated Front-ends
 
-OpenNebula federation feature has proven to be stable and reliable over the years. It allows users to construct a single federated cluster out of multiple smaller OpenNebula instances (HA or non-HA). The idea behind this feature is to provide architecture similar to AWS' Availability Zones.
+OpenNebula's federation feature has proven to be stable and reliable over the years. It allows users to construct a single federated cluster out of multiple smaller OpenNebula instances (HA or non-HA). The idea behind this feature is to provide architecture similar to AWS' Availability Zones.
 
 > [!NOTE]
-> You can learn more about **OpenNebula Data Center Federation** → [here](https://docs.opennebula.io/stable/installation_and_configuration/data_center_federation/index.html).
+> To can learn more about **OpenNebula Data Center Federation** please refer to the [documentation](https://docs.opennebula.io/stable/installation_and_configuration/data_center_federation/index.html).
 
 ## Architecture
 
@@ -47,20 +47,20 @@ OpenNebula federation feature has proven to be stable and reliable over the year
 
 ## Ansible Role
 
-The `opennebula` one-deploy role is responsible for creating federated OpenNebula clusters. There are two deployment types you can try:
+In `one-deploy`, the `opennebula` role is responsible for creating federated OpenNebula clusters. There are two deployment types you can try:
 
 - **Sequential** (recommended), where each peer in the federation is deployed from its own inventory file in a sequence of `ansible-playbook` invocations.
 - **Parallel**, where all peers are deployed from a single (slightly more complex) inventory file in a single `ansible-playbook` invocation.
 
 > [!WARNING]
-> Parallel deployment is slighly more experimental and limiting, for example Ceph deployment is not supported in this mode.
+> Parallel deployment is slightly more experimental and has some limitations, for example Ceph deployment is not supported in this mode.
 
 > [!WARNING]
-> Currently Prometheus provisioning has been disabled (in precheck) for both deployment modes, this will be likely mitigated however after future OpenNebula releases are out (>= 6.8.3).
+> Currently, Prometheus provisioning has been disabled (in precheck) for both deployment modes; this will likely be enabled on future OpenNebula releases.
 
 ### Sequential Provisioning
 
-To deploy federated OpenNebula cluster similar to the one depicted on the architecture diagram above you'll need three inventory files:
+To deploy a federated OpenNebula cluster similar to the one depicted on the architecture diagram above, you'll need three inventory files:
 
 ```yaml
 ---
@@ -69,7 +69,7 @@ all:
     ansible_user: ubuntu
     ensure_keys_for: [ubuntu, root]
     one_pass: opennebula
-    one_version: '6.8'
+    one_version: '6.10'
     vn:
       service:
         managed: true
@@ -102,13 +102,13 @@ node:
 ```
 
 > [!IMPORTANT]
-> The `force_master: true` **must** be provided to prepare the master Front-end for adding more Front-ends to the federation later.
+> The `force_master: true` parameter **must** be provided, to prepare the master Front-end for adding more Front-ends to the federation later.
 
 > [!IMPORTANT]
 > When deployed with one-deploy, the master `zone_name` **must** be `OpenNebula` (which is the default anyway).
 
 > [!IMPORTANT]
-> The `federation` ansible group **must** be undefined for the master Front-end.
+> The `federation` Ansible group **must** be undefined for the master Front-end.
 
 ```yaml
 ---
@@ -191,10 +191,10 @@ node:
 ```
 
 > [!IMPORTANT]
-> The `zone_name` variable **must** be defined for each slave for the **sequential** deployment mode.
+> In **sequential** deployment mode, the `zone_name` variable **must** be defined for each slave.
 
 > [!IMPORTANT]
-> The `federation` ansible group **must** be defined for slave Front-ends, where the **first** inventory host is assumed to be the master Front-end (in HA master case, the `ansible_host` variable should point to the VIP address).
+> For slave Front-ends, the federation Ansible group **must** be defined if the first inventory host is assumed to be the master Front-end. If the master is Highly-available, the `ansible_host` variable must point to the VIP address.
 
 Next you need to execute `ansible-playbook` commands in a sequence:
 
@@ -212,7 +212,7 @@ $ make I=inventory/slave2.yml
 
 ### Parallel Provisioning
 
-You can achieve similar result to the **sequential** one above, defining a single inventory file as follows:
+You can achieve a similar result to the **sequential** procedure above by defining a single inventory file, as follows:
 
 ```yaml
 ---
@@ -339,9 +339,9 @@ node:
 > If you don't provide `zone_name` for slave Front-ends then `frontend1`, `frontend2`, ... names will be assumed.
 
 > [!IMPORTANT]
-> You **must** replicate the inventory structure above exactly, with the exception for `_X` group names, that can be any names really as they are used to apply common variables to both `frontendX` and `nodeX` groups.
+> You **must** replicate the inventory structure above exactly, with the exception of the `_X` group names. For these you can use any name, since they are used to apply common variables to the `frontendX` and `nodeX` groups.
 
-And finally you can provision your federated environment in a single step as follows:
+Finally, you can provision your federated environment in a single step as follows:
 
 ```shell
 $ make I=inventory/parallel.yml
