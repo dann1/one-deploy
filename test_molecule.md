@@ -2,9 +2,9 @@
 
 # Molecule testing
 
-## Requirements (client)
+## Requirements (Client)
 
-`Molecule` and `pyone` are installed as python/pip dependencies for one-deploy:
+`Molecule` and `pyone` are installed as Python/pip dependencies for `one-deploy`:
 
 ```shell
 ~/one-deploy$ cat requirements.txt
@@ -26,13 +26,13 @@ Or directly:
 ~/one-deploy $ ansible-galaxy collection install -r requirements.yml
 ```
 
-## Requirements (server)
+## Requirements (Server)
 
-To deploy molecule integration environments (`ceph-hci`, `passenger-ha`, ...) you're going to need a working
+To deploy Molecule integration environments (`ceph-hci`, `passenger-ha`, ...) you will need a working
 OpenNebula instance with pre-configured networking and pre-installed OS images and VM templates.
 
 > [!NOTE]
-> You can use OpenNebula's [Public Marketplace](https://marketplace.opennebula.io/appliance) to download them.
+> You can download OS images and VM templates from OpenNebula's [Public Marketplace](https://marketplace.opennebula.io/appliance).
 
 Download (and rename) VM templates and OS images into your OpenNebula instance:
 
@@ -43,7 +43,7 @@ Download (and rename) VM templates and OS images into your OpenNebula instance:
 
 ## Configuration
 
-Create the `.env.yml` file in your one-deploy's checkout root, with the following content (you can use `.env.yml.sample` as a template):
+Create the `.env.yml` file in your `one-deploy`'s root directory, with the following content (you can use `.env.yml.sample` as a template):
 
 ```yaml
 ONE_HOST: http://localhost:2633/RPC2
@@ -61,9 +61,13 @@ ONE_RANGE3: 172.20.86.108 4
 - Provide your support token (required for the `prometheus-ha` environment).
 - Customize VNET name, subnet and IP ranges.
 
-## Converging environments
+## Converging Environments
 
 To list all available environments/tests:
+
+```
+molecule list
+```
 
 ```shell
 ~/one-deploy $ molecule list
@@ -86,13 +90,13 @@ INFO     Running prometheus-ha > list
   prometheus-ha-f4 │ default     │ ansible          │ prometheus-ha │ false   │ false
 ```
 
-To deploy the ceph-hci environment:
+To deploy the `ceph-hci` environment:
 
 ```shell
 ~/one-deploy $ molecule converge -s ceph-hci
 ```
 
-If everything goes well, you should be able to login and examine the environment:
+If everything goes well, you should be able to log in and examine the environment:
 
 ```shell
 ~/one-deploy $ molecule list -s ceph-hci
@@ -109,7 +113,7 @@ INFO     Running ceph-hci > list
 $ onevm ssh ceph-hci-f1
 ```
 
-## Destroing environments
+## Destroying environments
 
 To destroy a specific environment:
 
