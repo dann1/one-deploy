@@ -2,7 +2,7 @@
 
 # Platform Notes
 
-The playbooks are tested and verified on the following systems:
+The playbooks have been tested and verified on the following systems:
 
 | Platform               | Notes                    |
 | ---------------------- | ------------------------ |
