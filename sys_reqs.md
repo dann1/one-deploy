@@ -23,7 +23,7 @@ There are essentially two installation methods:
 
 Below is a brief description of each method. For details on installation and running the playbooks, see [Using the Playbooks](sys_use).
 
-### Both methods: Clone the `one-deploy` git repo
+### For both methods: Clone the `one-deploy` git repo
 
 To clone the `one-deploy` repo, run:
 
@@ -39,15 +39,9 @@ Then, proceed to install the requirements using your preferred method below:
 
 **Install poetry**:
 
-On Ubuntu 22.04:
-```
-apt install python3-pip python3-poetry
-```
-
-On Ubuntu 24.04:
-```
-apt install python3-poetry
-```
+| Ubuntu 22.04                              | Ubuntu 24.04                 |
+|-------------------------------------------|------------------------------|
+| `apt install python3-pip python3-poetry`  | `apt install python3-poetry` |
 
 Go to the `one-deploy` root directory and install the requirements:
 
@@ -55,7 +49,7 @@ Go to the `one-deploy` root directory and install the requirements:
 cd ./one-deploy/ && make requirements
 ```
 
-To list the new virtual environment, run:
+This installs the virtual environment with all requirements. To list the new virtual environment, run:
 ```
 poetry env list
 ```
@@ -78,19 +72,11 @@ Spawning shell within /home/user/.cache/pypoetry/virtualenvs/one-deploy-Yw-1D8Id
 
 **Install Python PIP and Ansible**:
 
-On Ubuntu 22.04:
-```
-apt install python3-pip
-pip3 install 'ansible-core<2.16'
-```
-
-On Ubuntu 24.04:
-```
-apt install pipx
-pipx install 'ansible-core<2.16'
-```
-
-
+| Ubuntu 22.04                              | Ubuntu 24.04                 |
+|-------------------------------------------|------------------------------------|
+| Run these commands:                       | Run these commands:                |
+| `apt install python3-pip`                 | `apt install pipx`                 |
+| `pip3 install 'ansible-core<2.16'`        | `pipx install 'ansible-core<2.16'` |
 
 Build the `one-deploy` requirements:
 ```
