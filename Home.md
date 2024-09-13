@@ -15,8 +15,8 @@ The documentation is organized in sections according to architecture and install
 
 * General Documentation (Common to all Installations):
 * [Requirements & Platform Notes](sys_reqs)
-* [Release notes](https://github.com/OpenNebula/one-deploy/releases)
-* [Using the playbooks](sys_use)
+* [Release Notes](https://github.com/OpenNebula/one-deploy/releases)
+* [Using the Playbooks](sys_use)
 * Installing for the Reference Cloud Architectures:
   * [Single Front-end Cloud and Local Storage](arch_single_local)
   * [Single Front-end Cloud and Shared Storage](arch_single_shared)
