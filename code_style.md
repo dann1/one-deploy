@@ -22,19 +22,19 @@ module_utils      = ./vendor/ceph-ansible/module_utils/
 ```
 
 > [!IMPORTANT]
-> We've made this exception and learned to live with it, but in general we don't want to repeat such mistakes. **Please, make sure one-deploy stays a collection as close to its purest form as possible.**
+> We've made this exception and learned to live with it, but in general we don't want to repeat such mistakes. **Please, make sure `one-deploy` stays a collection as close to its purest form as possible.**
 
 ### 1.2 Roles
 
-There is nothing special about roles implemented in one-deploy. There are few design choices however you should probably know:
+There is nothing special about roles implemented in `one-deploy`. There are few design choices however you should probably know:
 
 - Most of the roles depend on the `opennebula.deploy.common` role, it's the place where you can put some global defaults or pre-generate global facts.
 - Some of the roles are divided into parts (sub-roles) that should be executed in dedicated inventory groups.
-- Each role contains a readme file written in markdown.
+- Each role contains a README file written in markdown.
 
 ### 1.3 Inventory
 
-Our inventory markup language of choice is YAML, since it's more flexible than the usual INI format. In particular it allows you to express more complex inventories in a neat way, please take a look at the example below. The `vn` object would be much harder to define (and less readable) in an INI based inventory file.
+Our inventory markup language of choice is YAML, since it's more flexible than the usual INI format. In particular it allows to neatly express more complex inventories, as you can see in the example below. The `vn` object would be much harder to define (and less readable) in an INI-based inventory file.
 
 ```yaml
 ---
@@ -86,18 +86,18 @@ node:
 
 ### 1.4 The Makefile
 
-The Makefile is considered to be optional, please don't rely on it for implementing any of the core functionalities, just don't put them there. :-1:
+The Makefile is optional. Please don't rely on it for implementing any of the core functionalities — just don't put them there. :-1:
 
-For example, manual federated deployment requires sequential execution with multiple different inventory files, then the Makefile is not the correct place to implement that, just let the users execute manual steps manually. :point_up::relieved:
+For example, manual federated deployment requires sequential execution with multiple different inventory files, so  the Makefile is not the correct place to implement that. Just let users execute the manual steps manually. :point_up::relieved:
 
 ### 1.5 Pre-checks
 
-The `opennebula.deploy.precheck` role is executed in the `opennebula.deploy.pre` playbook. The main purpose of this role is to verify various conditions globally on the cluster level and prevent execution of the `opennebula.deploy.site` playbook if the conditions are not met. While implementing new features or updating existing ones you should consider adding new or updating existing pre-checks. Please make sure you design and test `ansible.builtin.assert` logic statements properly, don't rely on intuition, just identify and test all the test cases. :+1:
+The `opennebula.deploy.precheck` role is executed in the `opennebula.deploy.pre` playbook. The main purpose of this role is to verify various conditions globally at the cluster level, and prevent execution of the `opennebula.deploy.site` playbook if the conditions are not met. While implementing new features or updating existing ones, you should consider adding new pre-checks or updating existing pre-checks. Please make sure you design and test `ansible.builtin.assert` logic statements properly — don't rely on intuition, just identify and test all of the test cases. :+1:
 
 > [!WARNING]
-> The `opennebula.deploy.precheck` role doesn't depend on other roles and doesn't load defaults, it has been a conscious decision to repeat definitions of defaults inside logic statements.
+> The `opennebula.deploy.precheck` role doesn't depend on other roles and doesn't load defaults. It was a conscious decision to repeat definitions of defaults inside logic statements.
 
-## 2. Making your code readable
+## 2. Making Your Code Readable
 
 ### 2.1 Don't get too fancy with booleans
 
@@ -110,10 +110,10 @@ Luckily [YAML 1.2](https://yaml.org/spec/1.2.2/) properly recognizes `true True 
 
 ### 2.2 Use "conditional blocks"
 
-Please take a look at the idiom below, this is the way we recommend how to implement complex conditionals. Note, there is no `name:` attribute that we skip on purpose, so the whole expression is similar to a regular *if* statement.
+Please take a look at the idiom below, this is the way we recommend for implementing complex conditionals. Note, there is no `name:` attribute that we skip on purpose, so the whole expression is similar to a regular *if* statement.
 
 > [!IMPORTANT]
-> Please add `name:` attribute to most tasks with the exception of this `when/block` idiom and (if you wish) `include/import` statements.
+> Please add the `name:` attribute to most tasks except this `when/block` idiom and (if you wish) `include/import` statements.
 
 ```yaml
 - when: custom_fact == 'custom_value'
@@ -128,11 +128,11 @@ Please take a look at the idiom below, this is the way we recommend how to imple
 ```
 
 > [!WARNING]
-> A note about `ansible-lint`. The code above fails to validate with `ansible-lint` due to missing `name:` attribute, that's the main reason we don't use `ansible-lint`. Also, `ansible-lint` is annoying to use in general, so we don't care. *We're open for discussing it if you really (x2) think you can change our minds.* :thinking:
+> A note about `ansible-lint`. The code above fails to validate with `ansible-lint` due to missing `name:` attribute, that's the main reason we don't use `ansible-lint`. Also, `ansible-lint` is annoying to use in general, so we don't use it. *We're open to discussing it if you really (x2) think you can change our minds.* :thinking:
 
 ### 2.3 Use Jinja2 with task vars
 
-Please take a look at the example task below. You can see that it actually processes multiple JSON payloads, so you can (arguably) consider it to be complex. Now imagine all the code under `vars:` is written as a single line or split into multiple tasks.. :anger:
+Please take a look at the example task below. You can see that it actually processes multiple JSON payloads, so you can (arguably) consider it to be complex. Now imagine all the code under `vars:` is written as a single line or split into multiple tasks. :anger:
 
 Dividing Jinja2 pipelines into smaller and named local *vars* (prefixing them with _ is the pattern that we adopted to differentiate them from the actual facts) can make the whole functional expression easier to digest. Also, it allows for inserting comments, so just do it :+1:.
 
@@ -177,7 +177,7 @@ All Jinja2 and Ansible filters are allowed, use them at will. You can also use P
 - [Python-derived Attributes](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#referencing-key-value-dictionary-variables)
 
 > [!WARNING]
-> Please don't add custom filters and modules implemented in Python, filters and attributes mentioned above should be enough for most cases. **Do it only in very specific, well justified cases, otherwise please just don't bother.**
+> Please don't add custom filters and modules implemented in Python. The filters and attributes mentioned above should be enough for most cases. **Do it only in very specific, well-justified cases, otherwise please just don't do it.**
 
 Some examples of what we consider "correct" vs "incorrect" implementations:
 
@@ -248,13 +248,13 @@ Some examples of what we consider "correct" vs "incorrect" implementations:
       RedHat: [qemu-img]
 ```
 
-## 4. Be careful with **run_once**
+## 4. Be careful with `run_once`
 
-Since the Federation support has been merged [#38](https://github.com/OpenNebula/one-deploy/pull/38) `run_once` can no longer be used freely in most of the roles (in some special, selected cases only). The reason is the `opennebula` role tries to deploy multiple federated Front-ends in parallel, so the `run_once` has to be *emulated* in multiple subgroups of machines at the same time.
+Since Federation support was been merged in [#38](https://github.com/OpenNebula/one-deploy/pull/38), `run_once` can no longer be used freely in most of the roles, only in certain special, selected cases. The reason is that the `opennebula` role tries to deploy multiple federated Front-ends in parallel, so `run_once` has to be *emulated* in multiple subgroups of machines at the same time.
 
-You can read more about how `run_once` works [here](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_strategies.html#running-on-a-single-machine-with-run-once), but it basically picks the first machine from all `play_hosts`.
+You can read more about how `run_once` works in the [Ansible docs](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_strategies.html#running-on-a-single-machine-with-run-once), but to summarize, it basically picks the first machine from all `play_hosts`.
 
-So, instead of `run_once` you could be using constructions like:
+So, instead of `run_once` you could be using constructions such as:
 
 ```yaml
 - when: inventory_hostname == federation.groups.frontend[0] # instead of `run_once: true`
@@ -268,7 +268,7 @@ So, instead of `run_once` you could be using constructions like:
     some_result: "{{ hostvars[federation.groups.frontend[0]].some_result }}"
 ```
 
-## 5. Working with wiki pages
+## 5. Working with Wiki Pages
 
 1. Create your personal fork of the one-deploy repository.
 2. Add some page inside the wiki section (it can be anything).
@@ -280,10 +280,10 @@ So, instead of `run_once` you could be using constructions like:
 8. Push master to your wiki fork with force: `git push origin master -f`.
 9. Access the wiki in your fork to verify if the procedure worked.
 
-## 6. Testhink (pun intended)
+## 6. Testhink (Pun Intended)
 
-You can find molecule based integration tests inside the one-deploy checkout, they can be basically used to deploy pre-configured environments inside existing OpenNebula instances.
+You can find Molecule-based integration tests inside the `one-deploy` checkout, which can be basically used to deploy pre-configured environments inside existing OpenNebula instances.
 
-We haven't implemented per role molecule unit tests (yet), but nonetheless feel free to add some container based ones if you think it's properly justified.
+We haven't implemented per-role Molecule unit tests (yet), but nonetheless feel free to add some container-based ones if you think it's properly justified.
 
 **So far testing has been manual labor, you have to actually deploy something to see if your implementation is correct.**
