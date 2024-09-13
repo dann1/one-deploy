@@ -23,6 +23,18 @@ There are essentially two installation methods:
 
 Below is a brief description of each method. For details on installation and running the playbooks, see [Using the Playbooks](sys_use).
 
+### Both methods: Clone the `one-deploy` git repo
+
+To clone the `one-deploy` repo, run:
+
+```
+git clone https://github.com/OpenNebula/one-deploy.git
+```
+
+This will clone to directory `one-deploy`.
+
+Then, proceed to install the requirements using your preferred method below:
+
 ### Method 1: Install in a Python virtual environment using poetry
 
 **Install poetry**:
@@ -37,7 +49,11 @@ On Ubuntu 24.04:
 apt install python3-poetry
 ```
 
-**Using the virtual environment**:
+Go to the `one-deploy` root directory and install the requirements:
+
+```
+cd ./one-deploy/ && make requirements
+```
 
 To list the new virtual environment, run:
 ```
@@ -73,6 +89,8 @@ On Ubuntu 24.04:
 apt install pipx
 pipx install 'ansible-core<2.16'
 ```
+
+
 
 Build the `one-deploy` requirements:
 ```
