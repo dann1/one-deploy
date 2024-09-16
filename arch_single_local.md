@@ -233,7 +233,7 @@ To run the playbook, follow these basic steps:
 
 1. **Prepare the inventory file**, adapting it to your needs. For example, update the provided `local.yml` file to match your infrastructure settings.
 
-2. Check the connection between the Ansible control node and the managed nodes. You can verify the network connection, ssh and sudo configuration with the following command:
+2. **Check the connection** between the Ansible control node and the managed nodes. You can verify the network connection, ssh and sudo configuration with the following command:
 ```shell
 ansible -i inventory/local.yml all -m ping -b
 ```
