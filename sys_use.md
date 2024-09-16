@@ -2,94 +2,105 @@
 
 # Using the Playbooks
 
-## GitHub Project
+To use the playbooks, you'll need to:
 
-The easiest way to use the playbooks is by cloning the [GitHub project](https://github.com/OpenNebula/one-deploy.git).
+1. Download the playbooks.
+2. Install the requirements.
+3. Create and edit your inventory file.
+4. Execute the provisioning.
+
+## Downloading the Playbooks
+
+The easiest and recommended way to use the playbooks is by cloning the [GitHub project](https://github.com/OpenNebula/one-deploy.git).
 
 ```shell
 $ git clone --recursive https://github.com/OpenNebula/one-deploy.git
 ```
 
-If you look closely at the `ansible.cfg` file in the root of the `one-deploy` repository and the directory structure you'll notice:
+This will clone the playbooks in the `one-deploy` directory.
 
-```dosini
+> [!NOTE]
+> You will need to use this method if you plan to deploy Ceph clusters with OneDeploy.
+
+If you have Ansible already installed, you can also use `ansible-galaxy` to install directly from the GitHub repo:
+
+```shell
+$ ansible-galaxy collection install --upgrade git@github.com:OpenNebula/one-deploy.git,release-1.2.0
+```
+
+> [!NOTE]
+> Although pre-release `0.1.0` was initially pushed to the [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula), this is no longer being maintained. Cloning or installing from the GitHub repo is a much cleaner method, as described in the [Ansible documentation](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#installing-a-collection-from-a-git-repository).
+
+## Installing the Requirements
+
+To download and install the requirements, you can use Ansible commands or the included Makefile.
+
+**Using the Makefile**: From the `one-deploy` directory, run:
+
+```
+make requirements
+```
+
+**Using Ansible**: From the `one-deploy` directory, run:
+
+```
+ansible-galaxy collection install -r requirements.yml
+```
+
+## Executing the Provisioning
+
+At the root of the `one-deploy` directory, the `ansible.cfg` file contains:
+
+```
 [defaults]
 collections_paths = ./ansible_collections/
 ```
 
-```shell
-$ stat ./ansible_collections/opennebula/deploy
-  File: ./ansible_collections/opennebula/deploy -> ../../
-  Size: 6           Blocks: 0          IO Block: 4096   symbolic link
+The `ansible_collections/opennebula/deploy` directory is in fact a symlink to the repo's root directory:
+
+```
+one-deploy$ file ansible_collections/opennebula/deploy
+ansible_collections/opennebula/deploy: symbolic link to ../../
 ```
 
-> [!NOTE]
-> That effectively allows you to use files cloned from git as a "local" galaxy collection.
+This allows you to use files cloned from git as a "local" Galaxy collection.
 
-You can either use the included Makefile or enter `ansible-playbook` commands directly.
+You will need to create your inventory file in the `inventory` folder, or alternatively adapt one of the provided files to your needs.
 
-To use this repo:
+## Creating and Configuring the Inventory File
 
-1. Download requirements:
+For your inventory file you can adapt one of the files provided in the `one-deploy/inventory` directory, or create your own.
 
-```shell
-$ make requirements
+### Main Inventory File Global Parameters
+
+Below are some of the main parameters for the whole deployment:
+
+| Parameter       | Description                                                                  |
+|-----------------|------------------------------------------------------------------------------|
+| `one_version`   | OpenNebula version to deploy                                                 |
+| `one_pass`      | Password for the `oneadmin` user                                             |
+| `ansible_user`  | System user that will run the ansible playbooks (specify if other than root) |
+
+
+### Example Inventory File
+
+In this example we will create an inventory folder, place the Ansible configuration file and inventory file in it, and execute the playbooks from there.
+
+Create your inventory folder, then navigate to it:
+
 ```
-OR
-```shell
-$ ansible-galaxy collection install -r requirements.yml
-```
-
-2. Create your inventory file inside the `inventory/` folder.
-
-3. Execute the provisioning:
-
-```shell
-$ make I=inventory/example.yml
-```
-OR
-```shell
-$ ansible-playbook -i inventory/example.yml opennebula.deploy.main
-```
-
-4. Execute provisioning for specific tags:
-
-```shell
-$ make I=inventory/example.yml T=bastion,preinstall
-```
-OR
-```shell
-$ ansible-playbook -i inventory/example.yml opennebula.deploy.main -t bastion,preinstall
+mkdir ~/my-one/ && cd ~/my-one/
 ```
 
-5. Proceed normally like with any other Ansible playbook. Thank you! :hugs:
+Create the inventory file, in this case `example.yml`:
 
-## Ansible Galaxy Collection
-
-Although we initially pushed pre-release `0.1.0` to [Ansible Galaxy community site](https://galaxy.ansible.com/opennebula), we no longer wish to maintain it. Instead we recommend using this [much cleaner method](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#installing-a-collection-from-a-git-repository).
-
-To install the `opennebula.deploy` collection directly from GitHub, execute:
-
-```shell
-$ ansible-galaxy collection install --upgrade git@github.com:OpenNebula/one-deploy.git,release-1.0.0
 ```
-
-> [!NOTE]
-> If you intend to deploy Ceph clusters with one-deploy, please use the [direct clone method](sys_use#github-project).
-
-To deploy a full OpenNebula environment using playbooks downloaded together with the collection:
-
-1. Create your inventory folder:
-
-```shell
-$ mkdir ~/my-one/
-
-$ cat > ~/my-one/example.yml <<'EOF'
+$ cat > example.yml <<'EOF'
 ---
 all:
   vars:
     ansible_user: root
-    one_version: '6.6'
+    one_version: '6.10'
     one_pass: opennebulapass
     vn:
       admin_net:
@@ -116,8 +127,15 @@ node:
     n1: { ansible_host: 172.20.0.7 }
     n2: { ansible_host: 172.20.0.8 }
 EOF
+```
 
-$ cat > ~/my-one/ansible.cfg <<'EOF'
+> [!NOTE]
+> You will probably need to adapt this sample file to your infrastructure, e.g. IP addresses, etc.
+
+Create the `ansible.cfg` file:
+
+```
+$ cat > ansible.cfg <<'EOF'
 [defaults]
 inventory=./example.yml
 gathering=explicit
@@ -127,32 +145,73 @@ retry_files_enabled=false
 any_errors_fatal=true
 stdout_callback=yaml
 timeout=30
+collections_paths=/home/user/one-deploy/ansible_collections
 
 [ssh_connection]
 pipelining=true
 ssh_args=-q -o ControlMaster=auto -o ControlPersist=60s
 EOF
 ```
-2. Execute the main playbook:
 
-```shell
-$ (cd ~/my-one/ && ansible-playbook -v opennebula.deploy.main)
+> [!NOTE]
+> Ensure to replace `collections_paths` with the path to the Ansible collection.
+
+## Executing the Provisioning
+
+From the `my-one` directory you can run:
+
+```
+ansible-playbook -v opennebula.deploy.main
 ```
 
-3. You can also compose your own playbook or embed `opennenebula.deploy.*` roles into some existing automation. To for example run only SSH key provisioning, execute:
+You can also execute from the `one-deploy` directory, using the included Makefile or entering `ansible-playbook` commands directly.
+
+```
+make I=inventory/my_inventory.yml
+```
+
+Or alternatively:
+
+```
+ansible-playbook -i inventory/my_inventory.yml opennebula.deploy.main
+```
+
+### Executing Only Specific Tasks
+
+You can execute only specific tasks by using tags:
 
 ```shell
-$ cat > keys.yml <<'EOF'
+make I=inventory/my_inventory.yml T=bastion,preinstall
+```
+
+Or alternatively:
+
+```shell
+$ ansible-playbook -i inventory/example.yml opennebula.deploy.main -t bastion,preinstall
+```
+
+For a list of tags please see [below](sys_use#available-tags).
+
+### Customizing the Playbooks
+
+You can also compose your own playbook, or embed `opennebula.deploy.*` roles into an existing automation. For example, to run only SSH key provisioning from the `my-one` directory:
+
+```
+ansible-playbook -v keys.yml
+```
+
+Where `keys.yml` contains:
+
+```
 ---
 - hosts: frontend:node
-  roles:
-    - role: opennebula.deploy.helper.keys
-EOF
-
-$ (cd ~/my-one/ && ansible-playbook -v keys.yml)
+  roles:
+    - role: opennebula.deploy.helper.key
 ```
 
-## Available tags
+For a complete list of playbooks and roles please refer to the [Playbook Reference](sys_reference).
+
+## Available Tags
 
 | Tag          | Description                                             |
 |--------------|---------------------------------------------------------|
