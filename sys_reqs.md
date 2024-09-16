@@ -23,6 +23,9 @@ There are essentially two installation methods:
 
 Below is a brief description of each method. For details on installation and running the playbooks, see [Using the Playbooks](sys_use).
 
+> [!TIP]
+> For full details on installing Ansible on your system, please refer to the [Ansible documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
+
 ### For both methods: Clone the `one-deploy` git repo
 
 To clone the `one-deploy` repo, run:
@@ -37,7 +40,7 @@ Then, proceed to install the requirements using your preferred method below:
 
 ### Method 1: Install in a Python virtual environment using poetry
 
-**Install poetry**:
+To install poetry, run the below commands for your operating system:
 
 | Ubuntu 22.04                              | Ubuntu 24.04                 |
 |-------------------------------------------|------------------------------|
@@ -70,11 +73,10 @@ Spawning shell within /home/user/.cache/pypoetry/virtualenvs/one-deploy-Yw-1D8Id
 
 ### Method 2: Pre-install Ansible system-wide
 
-**Install Python PIP and Ansible**:
+To install Ansible, run the below commands for your operating system:
 
 | Ubuntu 22.04                              | Ubuntu 24.04                 |
 |-------------------------------------------|------------------------------------|
-| Run these commands:                       | Run these commands:                |
 | `apt install python3-pip`                 | `apt install pipx`                 |
 | `pip3 install 'ansible-core<2.16'`        | `pipx install 'ansible-core<2.16'` |
 
