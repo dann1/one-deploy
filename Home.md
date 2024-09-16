@@ -6,7 +6,7 @@ OneDeploy, the OpenNebula Ansible project, is a set of playbooks and roles that 
 
 The supported automated deployments include advanced features such as Ceph storage, High Availability for the Front-end, federation, and installing the Front-end in a VM.
 
-The documentation is organized in sections according to architecture and installation type. It covers three reference cloud architectures, progressing from the most simple (based on local storage) to the most complex (Ceph storage). Each section includes concise explanations of the configurations implemented on both the platform and OpenNebula. Reference and examples are also provided for additional configurations such as HA, federation, VXLAN and others.
+The documentation is organized in sections according to architecture and installation type. It includes examples of deployments on three reference architectures, progressing from the most simple (based on local storage) to the most complex (Ceph storage). Each section includes concise explanations of the configurations implemented on both the platform and OpenNebula. Reference and examples are also provided for additional configurations such as HA, federation, VXLAN and others.
 
 > [!TIP]
 > For installing on the local storage and shared storage reference architectures, the OpenNebula documentation includes two step-by-step [tutorials](https://docs.opennebula.io/stable/installation_and_configuration/automatic_deployment/one_deploy_overview.html).
