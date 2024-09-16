@@ -9,7 +9,7 @@ The playbooks have been tested and verified on the following systems:
 | Ubuntu 22.04, 24.04    | Netplan version >= 0.105 |
 | RHEL 9 and derivatives | NetworkManager required  |
 
-# Requirements
+## Requirements
 
 * Ansible version >= 2.14 and < 2.16 (currently required if you want to run Ceph provisioning)
 * SSH access to the inventory servers, either directly or through a bastion host
