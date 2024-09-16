@@ -1,6 +1,6 @@
 [//]: # ( vim: set nowrap : )
 
-# Playbook reference
+# Playbook Reference
 
 ## Playbooks
 
