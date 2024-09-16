@@ -1,34 +1,44 @@
 [//]: # ( vim: set wrap : )
 
-# Single Front-end & Local Storage
+# Deploying a Single Front-end & Local Storage
 
-In this scenario we will have a single Front-end hosting all the OpenNebula services and a set of hosts that will act as hypervisors to run Virtual Machines (VM). Let us review some of the main components.
-<p align="center">
-<img src="images/arch_local.png" width="60%">
-</p>
+In this architecture, a single Front-end runs all of the OpenNebula services, and the Virtual Machines (VMs) run on Hypervisor hosts. VM images are hosted in the Front-end, and transferred to the Hypervisor nodes as needed.
+
+The Front-end and hypervisors are in the same flat (bridged) network.
+
+This page briefly describes each component of the architecture and lists the corresponding configuration for automatic deployment.
+
+For a step-by-step tutorial on deploying on this architecture, please see the [OpenNebula documentation](https://docs.opennebula.io/stable/installation_and_configuration/automatic_deployment/one_deploy_tutorial_local_ds.html).
+
+[[images/arch_local.png|Single Front-end with local storage]]
 
 ## Storage
-Virtual disk images are stored in local storage, with the Front-end hosting an image repository (image datastore). These images are subsequently transferred from the Front-end to the hypervisors to initiate the Virtual Machines (VMs). Both the front-end and hypervisors utilize the directory `/var/lib/one/datastores` to store these images. It is possible to either utilize the root file system (FS) for this directory or symlink from any other location.
 
+The Front-end hosts the image repository that contains the virtual disk images. When a Virtual Machine is instantiated, the Front-end transfers a copy of the virtual disk image to the Hypervisor node that will run the VM. By default, both the Front-end and Hypervisor nodes store these images in the directory `/var/lib/one/datastores`. This can be an actual directory on the root filesystem, or a symlink to any other location.
 
-The following snippet shows the configuration required if no mount points are used:
+### Configuring the Automatic Deployment
 
-```yaml
+#### Datastore Mode
+
+To use the default location (/var/lib/one/datastores as a real directory on the root filesystem), the inventory file for the deployment should contain the following snippet:
+
+```
 ds:
-  mode: ssh
+   mode: ssh
 ```
 
-> [!NOTE]
-> If you want to use a dedicated volume for all your datastores, you can pre-mount it in `/var/lib/one/datastores/`.
+#### Storage Volumes
 
-If you want to use a dedicated volume mounted in a custom location (for example `/mnt/one_datastores/`), then you need to pre-create directories (owned by `oneadmin`) for each datastore and use the following snippet which will cause symlinks to be created automatically:
+If you wish to use a dedicated volume for the datastores, you can mount it at `/var/lib/one/datastores` prior to the deployment.
 
-```yaml
+To use a dedicated volume mounted at a custom location (e.g. `/mnt/one_datastores`), then you need to pre-create directories for each datastore, and assign the oneadmin system user as owner. In the inventory file use the following snippet, which will automatically create the symlinks during the deployment:
+
+```
 ds:
 
   mode: ssh
-  mounts:
-  - type: system
+  mounts:
+  - type: system
     path: /mnt/one_datastores/system/
   - type: image
     path: /mnt/one_datastores/default/
@@ -36,20 +46,26 @@ ds:
     path: /mnt/one_datastores/files/
 ```
 
-The final setting on the hosts will be:
+The resulting directory structure on each host is shown below:
 
-```shell
-$ tree /mnt/one_datastores/
-/mnt/one_datastores/
-├── system
-├── default
-└── files
+Deployed to the default location:
 
+```
 $ tree /var/lib/one/datastore/
 /var/lib/one/datastores/
 ├── 0 -> /mnt/one_datastores/system/
 ├── 1 -> /mnt/one_datastores/default/
 └── 2 -> /mnt/one_datastores/files/
+```
+
+Deployed to a custom location, in this case `/mnt/one_datastores/`:
+
+```
+$ tree /mnt/one_datastores/
+/mnt/one_datastores/
+├── system
+├── default
+└── files
 ```
 
 ## Networking
