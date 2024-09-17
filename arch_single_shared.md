@@ -124,7 +124,7 @@ The table below lists some of the parameters, which you should update to your ow
 | `DNS`          | DNS server for the network.                                                                    |
 | `f1`,`n1`,`n2` | `ansible_host` IP addresses for the Front-end (`n1`) and Hypervisors (`n1` and `n2`).          |
 | `ds`           | Datastore mode.                                                                                |
-| `fstab`        | The NFS share for accessing datastores, ikn <host>:<folder> format.                            |
+| `fstab`        | The NFS share for accessing datastores, in \<host\>:\<folder\> format.                         |
 
 ## Additional NFS Configuration Options
 
