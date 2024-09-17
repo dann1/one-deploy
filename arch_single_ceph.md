@@ -345,7 +345,7 @@ Below are the contents of the ceph.yml file. The Ceph configuration begins at ce
 all:
   vars:
     ansible_user: root
-    one_version: '6.8'
+    one_version: '6.10'
     one_pass: opennebulapass
     features:
       # Enable the "ceph" feature in one-deploy.
