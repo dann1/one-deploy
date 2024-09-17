@@ -122,7 +122,7 @@ The table below lists some of the parameters, which you should update to your ow
 | `AR`           | Address range (first IP and size) to assign to the VMs.                                        |
 | `GATEWAY`      | Default gateway for the network.                                                               |
 | `DNS`          | DNS server for the network.                                                                    |
-| `f1`,`n1`,`n2` | `ansible_host` IP addresses for the Front-end (`n1`) and Hypervisors (`n1` and `n2`).          |
+| `f1`,`n1`,`n2` | Ansible host IP addresses for the Front-end (`f1`) and Hypervisors (`n1` and `n2`).            |
 | `ds`           | Datastore mode.                                                                                |
 | `fstab`        | The NFS share for accessing datastores, in \<host\>:\<folder\> format.                         |
 
@@ -187,11 +187,11 @@ To run the playbook, follow these basic steps:
 2. **Check the connection** between the Ansible control node and the managed nodes. You can verify the network connection, ssh and sudo configuration with the following command:
 
 ```shell
-ansible -i inventory/local.yml all -m ping -b
+ansible -i inventory/shared.yml all -m ping -b
 ```
 
 3. **Run the playbook**, for example from the `one-deploy` directory with the below command:
 ```shell
-ansible-playbook -i inventory/local.yml opennebula.deploy.main
+ansible-playbook -i inventory/shared.yml opennebula.deploy.main
 ```
 After execution of the playbook is finished, your new OpenNebula cloud is ready. You can check the installation by following the [Verification guide](sys_verify).
