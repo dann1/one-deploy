@@ -56,7 +56,7 @@ To configure the network, you can follow the relevant section in the [Local Stor
 
 ## OpenNebula Front-end and Services
 
-This scenario uses the same configuration as the [Local Storage](arch_single_local) page of this documentation. Please refer to that page for details on [configuring the Front-end services](arch_single_local#opennebula-front-end--services) or [using your Enterprise Edition token](arch_single_local#enterprise-edition).
+This scenario uses the same configuration as the [Local Storage](arch_single_local#opennebula-front-end--services) page of this documentation. Please refer to that page for details on [configuring the Front-end services](arch_single_local#opennebula-front-end--services) or [using your Enterprise Edition token](arch_single_local#enterprise-edition).
 
 ## Configuring the Inventory
 
