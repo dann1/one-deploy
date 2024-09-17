@@ -4,18 +4,18 @@
 
 This scenario is a variation of the [local storage](arch_single_local) configuration. Here, the storage for virtual machines (VMs) and the image repository are provided by an NFS/NAS server. Running VMs directly from shared storage can enhance the fault tolerance of the system in the event of a host failure, albeit with the drawback of increased I/O latency.
 
-The Front-end and hypervisors are deployed in the same flat (bridged) network.
+In this architecture the Front-end and hypervisors are deployed in the same flat (bridged) network.
 
 This page briefly describes each component of the architecture and lists the corresponding configuration for automatic deployment.
 
 For a step-by-step tutorial on deploying on this architecture, please see the [OpenNebula documentation](https://docs.opennebula.io/stable/installation_and_configuration/automatic_deployment/one_deploy_tutorial_shared_ds.html).
 
+> [!NOTE]
+> The playbook assumes that the NFS server is already configured and available for the nodes where you will deploy your cloud.
+
 <p align="center">
 <img src="images/arch_shared.png" width="60%">
 </p>
-
-> [!NOTE]
-> The playbook assumes that you have already a working NFS server available in your cloud.
 
 ## Storage
 
