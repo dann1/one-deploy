@@ -96,6 +96,7 @@ Note that:
 - The `os_image_url` variable should point to an official OpenNebula image provided via the [OpenNebula Marketplace](https://marketplace.opennebula.io/appliance) or to some other compatible image that runs [OpenNebula Contextualization](https://github.com/OpenNebula/one-apps/wiki/linux_installation).
 - The `os_image_size` is needed for resizing (up) the QCOW2 images for each of the deployed Front-ends; the default is **20G**.
 - The `infra_bridge` must be pre-created by the user. OneDeploy will use this bridge device to insert Libvirt's NICs into.
+- **IMPORTANT**: by default, the maximum length for an interface name is 16 characters. The interface for the frontend VMs is the name of the frontend and the suffix `-nic0`(i.e. for a frontend name `fe_name`, it would be `fe_name-nic0`). The maximum length for a frontend name should be 12 bytes, then.
 
 ### Setting Context Variables for the Front-end VMs
 
