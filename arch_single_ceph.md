@@ -338,7 +338,7 @@ $ ansible-playbook -i inventory/ceph.yml opennebula.deploy.ceph
 
 The one-deploy/inventory directory contains the ceph.yml file, and the ceph-hci.yml file for Hyper-Converged Infrastructure.
 
-Below are the contents of the ceph.yml file. The Ceph configuration begins at ceph:. (For full details on configuring ceph-* roles please refer to the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/)).
+Below are the contents of the ceph.yml file. The Ceph configuration begins at `ceph:`. (For full details on configuring ceph-* roles please refer to the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/)).
 
 ```yaml
 ---
