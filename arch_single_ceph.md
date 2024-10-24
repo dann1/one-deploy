@@ -4,7 +4,7 @@
 
 The playbooks in OneDeploy offer the possibility of using a local Ceph cluster for storing the Virtual Machines (VMs) and the image repository. From the perspective of the OneDeploy inventory and OpenNebula configuration, this scenario is a variation of the [Shared Storage](arch_single_shared) setup, using Ceph instead of an NFS/NAS server. Running VMs directly from a Ceph cluster offers enhanced fault tolerance in the event of a host failure, at the expense of increased I/O latency.
 
-To define the initial Ceph configuration, `one-deploy` uses the official Ceph Ansible playbook, which is called `ceph-ansible`. Only specific roles from `ceph-ansible` are used. Additionally, `one-depoy` introduces the `opennebula.deploy.ceph playbook`, which is run _before_ the main deployment.
+To define the initial Ceph configuration, `one-deploy` uses the official Ceph Ansible playbook, which is called `ceph-ansible`. Only specific roles from `ceph-ansible` are used. Additionally, `one-depoy` introduces the `opennebula.deploy.ceph` playbook, which is run _before_ the main deployment.
 
 For a detailed description of all available Ceph attributes and configurations, we recommend referring to the [official Ceph documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/).
 
@@ -20,7 +20,7 @@ The requirements to run the single-deployment Ceph integration are fundamentally
 - **Disk Storage**: Each OSD node should have one or more disks dedicated to storing data. SSDs are recommended for journaling and metadata purposes, while HDDs or SSDs can be used for actual data storage. *These disks MUST be formatted and empty*, without any partition created.
 - **Network Infrastructure**: A reliable and high-speed network infrastructure is crucial for efficient communication between nodes. This includes both public and cluster networks. You will also need to configure two networks to be used in the Ceph cluster:
     - A private network for a private communication between the nodes of the Cluster.
-    - A public network to ensure that each node is accessible from the service network on which OpenNebula operates, or OpenNebula will not be able to communicate with the Ceph cluster.
+    - A public network to ensure that each node is accessible from the service network on which OpenNebula operates, otherwise OpenNebula will not be able to communicate with the Ceph cluster.
 
 ## Configuring the Base Inventory
 
@@ -73,7 +73,7 @@ osds:
 ```
 
 > [!TIP]
-> For details on these attributes, we recommend you check the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/).
+> For details on these attributes please refer to the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/).
 
 2. **Preparation**: Before deploying Ceph, the playbook may perform tasks to ensure that all necessary prerequisites are met on the target servers. This can involve installing required packages, configuring network settings, and ensuring that the servers have adequate resources.
 
@@ -84,7 +84,7 @@ osds:
 
     - **Deploy MGRs**: MGR nodes, or Manager nodes, are responsible for managing and monitoring the Ceph cluster. The playbook will deploy MGR nodes and configure them to collect and present cluster metrics, handle commands and requests from clients, and perform other management tasks.
 
-4. **Configure the Cepch Cluster**: Once all necessary components are deployed, the playbook will perform any additional tasks required to finish configuring the Ceph cluster. This may include setting up placement groups (PGs), configuring pools, enabling features such as erasure coding or cache tiering, and optimizing performance settings. By default, one pool will be created with the name `one`.
+4. **Configure the Ceph Cluster**: Once all necessary components are deployed, the playbook will perform any additional tasks required to finish configuring the Ceph cluster. This may include setting up placement groups (PGs), configuring pools, enabling features such as erasure coding or cache tiering, and optimizing performance settings. By default, one pool will be created with the name `one`.
 
 ## Additional Configurations per Use Case
 
@@ -92,10 +92,10 @@ Depending on each use case, additional configuration may be required to run the 
 
 ### Dedicated Hosts (Non-HCI)
 
-In this scenario, the Ceph OSD servers are deployed on dedicated hosts. For full configuration details please refer to the [ceph-ansible documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/), and to the group variable definions inside its [official git repository](https://github.com/ceph/ceph-ansible/tree/main/group_vars).
+In this scenario, the Ceph OSD servers are deployed on dedicated hosts. For full configuration details please refer to the [Ceph Ansible documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/), and to the group variable definions inside its [official git repository](https://github.com/ceph/ceph-ansible/tree/main/group_vars).
 
 > [!NOTE]
-> OneDeploy uses only specific roles from the `ceph-ansible` project and introduces the `opennebula.deploy.ceph` playbook to be executed *before* the main deployment.
+> OneDeploy uses only specific roles from the `ceph-ansible` project, and introduces the `opennebula.deploy.ceph` playbook to be executed *before* the main deployment.
 
 ```yaml
 ---
@@ -305,7 +305,7 @@ osds:
       osd_crush_location: { host: osd3, rack: rack3, root: root1 }
 ```
 
-In this case, running the `opennebula.deploy.ceph` playbook should result in the below CRUSH architecture:
+In this case, running the `opennebula.deploy.ceph` playbook should result in the CRUSH architecture shown below:
 
 ```shell
 # ceph osd crush tree
@@ -336,9 +336,9 @@ For deploying the Ceph cluster, `one-deploy` includes the `opennebula.deploy.cep
 $ ansible-playbook -i inventory/ceph.yml opennebula.deploy.ceph
 ```
 
-The one-deploy/inventory directory contains the ceph.yml file, and the ceph-hci.yml file for Hyper-Converged Infrastructure.
+The `one-deploy/inventory` directory contains the `ceph.yml` file, as well as the `ceph-hci.yml` file for Hyper-Converged Infrastructure.
 
-Below are the contents of the ceph.yml file. The Ceph configuration begins at `ceph:`. (For full details on configuring ceph-* roles please refer to the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/)).
+Below are the contents of the `ceph.yml` file. The Ceph configuration begins at `ceph:`. (For full details on configuring `ceph-*` roles please refer to the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/)).
 
 ```yaml
 ---
@@ -421,7 +421,7 @@ For the full guide on configuring `ceph-*` roles, please refer to the [official 
 
 ## Running the Ansible Playbook
 
-For complete information on running the playbooks, please see [Using the Playbooks](sys_use).
+For complete information on running the playbooks, see [Using the Playbooks](sys_use).
 
 To run the playbook, follow these basic steps:
 
@@ -433,9 +433,9 @@ To run the playbook, follow these basic steps:
 ansible -i inventory/local.yml all -m ping -b
 ```
 
-3. **Run the playbook**, for example from the `one-deploy` directory with the below command:
+3. **Run the playbook**, for example by running the below command from the `one-deploy` directory:
 
 ```shell
 ansible-playbook -i inventory/ceph.yml opennebula.deploy.main
 ```
-After execution of the playbook is finished, your new OpenNebula cloud is ready. You can check the installation by following the [Verification guide](sys_verify).
+After execution of the playbook is finished, your new OpenNebula cloud is ready. You can check the installation by following the [Verification Guide](sys_verify).
