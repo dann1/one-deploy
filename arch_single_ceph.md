@@ -22,7 +22,7 @@ The requirements to run the single-deployment Ceph integration are fundamentally
     - A private network for a private communication between the nodes of the Cluster.
     - A public network to ensure that each node is accessible from the service network on which OpenNebula operates, or OpenNebula will not be able to communicate with the Ceph cluster.
 
-## Configuring the Base Intenvory
+## Configuring the Base Inventory
 
 This section briefly describes a typical workflow of the Ceph playbook, focusing on components such as OSDs (Object Storage Daemons), MONs (Monitor Nodes) and MGRs (Manager Nodes). These components will later be added to OpenNebula, implementing all functionality described for the [Ceph Datastore](https://docs.opennebula.io/stable/open_cluster_deployment/storage_setup/ceph_ds.html)in the OpenNebula documentation.
 
@@ -305,7 +305,7 @@ osds:
       osd_crush_location: { host: osd3, rack: rack3, root: root1 }
 ```
 
-In this case, running the `opennebula.deploy.ceph` playbook should result in such CRUSH architecture:
+In this case, running the `opennebula.deploy.ceph` playbook should result in the below CRUSH architecture:
 
 ```shell
 # ceph osd crush tree
@@ -338,7 +338,7 @@ $ ansible-playbook -i inventory/ceph.yml opennebula.deploy.ceph
 
 The one-deploy/inventory directory contains the ceph.yml file, and the ceph-hci.yml file for Hyper-Converged Infrastructure.
 
-Below are the contents of the ceph.yml file. The Ceph configuration begins at ceph:. (For full details on configuring ceph-* roles please refer to the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/).
+Below are the contents of the ceph.yml file. The Ceph configuration begins at ceph:. (For full details on configuring ceph-* roles please refer to the [Ceph Ansible playbook documentation](https://docs.ceph.com/projects/ceph-ansible/en/latest/)).
 
 ```yaml
 ---
@@ -434,6 +434,7 @@ ansible -i inventory/local.yml all -m ping -b
 ```
 
 3. **Run the playbook**, for example from the `one-deploy` directory with the below command:
+
 ```shell
 ansible-playbook -i inventory/ceph.yml opennebula.deploy.main
 ```
