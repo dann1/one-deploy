@@ -133,7 +133,6 @@ all:
 
 > [!IMPORTANT]
 > The attribute `VXLAN_MODE: evpn` **must** be present in the VNET definition (otherwise there would be no point in enabling the `evpn` feature). Using the attribute `IP_LINK_CONF: nolearning=` is recommended.
-> Attribute `VXLAN_MODE: evpn` (`IP_LINK_CONF: nolearning=` is recommended) **must** be used in the VNET definition, otherwise there is no point in enabling the `evpn` feature whatsoever.
 
 > [!WARNING]
 > Because the VXLAN protocol header uses some space in each UDP packet, you should decrease the MTU (`1450` is the usual value) in your VXLAN VNET definitions to accommodate.

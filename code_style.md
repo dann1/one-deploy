@@ -250,7 +250,7 @@ Some examples of what we consider "correct" vs "incorrect" implementations:
 
 ## 4. Be careful with `run_once`
 
-Since Federation support was been merged in [#38](https://github.com/OpenNebula/one-deploy/pull/38), `run_once` can no longer be used freely in most of the roles, only in certain special, selected cases. The reason is that the `opennebula` role tries to deploy multiple federated Front-ends in parallel, so `run_once` has to be *emulated* in multiple subgroups of machines at the same time.
+Since Federation support was merged in [#38](https://github.com/OpenNebula/one-deploy/pull/38), `run_once` can no longer be used freely in most of the roles, only in certain special, selected cases. The reason is that the `opennebula` role tries to deploy multiple federated Front-ends in parallel, so `run_once` has to be *emulated* in multiple subgroups of machines at the same time.
 
 You can read more about how `run_once` works in the [Ansible docs](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_strategies.html#running-on-a-single-machine-with-run-once), but to summarize, it basically picks the first machine from all `play_hosts`.
 
@@ -280,7 +280,7 @@ So, instead of `run_once` you could be using constructions such as:
 8. Push master to your wiki fork with force: `git push origin master -f`.
 9. Access the wiki in your fork to verify if the procedure worked.
 
-## 6. Testhink (Pun Intended)
+## 6. Testing
 
 You can find Molecule-based integration tests inside the `one-deploy` checkout, which can be basically used to deploy pre-configured environments inside existing OpenNebula instances.
 
