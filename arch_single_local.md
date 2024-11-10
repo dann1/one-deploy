@@ -72,7 +72,7 @@ $ tree /mnt/one_datastores/
 
 This deployment uses the most basic network configuration, a flat (bridged) network. Each host uses its main network interface to connect to the VMs on the network.
 
-> [! NOTE]
+> [!NOTE]
 > To perform the initial configuration, the playbooks require Netplan or NetworkManager on all the nodes.
 
 The image below shows the interfaces used in this deployment:
