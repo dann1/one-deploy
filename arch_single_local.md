@@ -35,7 +35,6 @@ To use a dedicated volume mounted at a custom location (e.g. `/mnt/one_datastore
 
 ```
 ds:
-
   mode: ssh
   mounts:
   - type: system

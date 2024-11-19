@@ -26,6 +26,7 @@ The documentation is organized in sections according to architecture and install
   * [Highly-available Front-end](arch_ha)
   * [Federated Front-ends](arch_fed)
   * [VXLAN/EVPN Networking](arch_evpn)
+  * [Generic Datastore Mode](arch_generic_ds)
 * Additional Installation Options:
   * [Airgapped Installation](sys_airgap)
   * [Front-end Installation as VM](arch_infra)

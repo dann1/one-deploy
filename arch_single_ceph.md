@@ -64,7 +64,7 @@ osds:
       devices:
         - /dev/disk/by-id/wwn-0x5000cca2c0085778
         - /dev/disk/by-id/wwn-0x5000cca2c00589d0
-       
+
     osd03:
       ansible_host: '10.255.0.3'
       devices:
