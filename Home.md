@@ -28,6 +28,7 @@ The documentation is organized in sections according to architecture and install
   * [VXLAN/EVPN Networking](arch_evpn)
   * [Generic Datastore Mode](arch_generic_ds)
 * Additional Installation Options:
+  * [Sunstone Installation](arch_sunstone)
   * [Airgapped Installation](sys_airgap)
   * [Front-end Installation as VM](arch_infra)
   * [Connect Through a Bastion Host](arch_bastion)
