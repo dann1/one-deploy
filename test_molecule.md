@@ -28,7 +28,7 @@ Or directly:
 
 ## Requirements (Server)
 
-To deploy Molecule integration environments (`ceph-hci`, `passenger-ha`, ...) you will need a working
+To deploy Molecule integration environments (`ceph-hci`, `ssl-ha`, ...) you will need a working
 OpenNebula instance with pre-configured networking and pre-installed OS images and VM templates.
 
 > [!NOTE]
@@ -72,7 +72,7 @@ molecule list
 ```shell
 ~/one-deploy $ molecule list
 INFO     Running ceph-hci > list
-INFO     Running passenger-ha > list
+INFO     Running ssl-ha > list
 INFO     Running prometheus-ha > list
                    ╷             ╷                  ╷               ╷         ╷
   Instance Name    │ Driver Name │ Provisioner Name │ Scenario Name │ Created │ Converged
@@ -80,10 +80,10 @@ INFO     Running prometheus-ha > list
   ceph-hci-f1      │ default     │ ansible          │ ceph-hci      │ false   │ false
   ceph-hci-n1      │ default     │ ansible          │ ceph-hci      │ false   │ false
   ceph-hci-n2      │ default     │ ansible          │ ceph-hci      │ false   │ false
-  passenger-ha-f1  │ default     │ ansible          │ passenger-ha  │ false   │ false
-  passenger-ha-f2  │ default     │ ansible          │ passenger-ha  │ false   │ false
-  passenger-ha-f3  │ default     │ ansible          │ passenger-ha  │ false   │ false
-  passenger-ha-f4  │ default     │ ansible          │ passenger-ha  │ false   │ false
+  ssl-ha-f1        │ default     │ ansible          │ ssl-ha        │ false   │ false
+  ssl-ha-f2        │ default     │ ansible          │ ssl-ha        │ false   │ false
+  ssl-ha-f3        │ default     │ ansible          │ ssl-ha        │ false   │ false
+  ssl-ha-f4        │ default     │ ansible          │ ssl-ha        │ false   │ false
   prometheus-ha-f1 │ default     │ ansible          │ prometheus-ha │ false   │ false
   prometheus-ha-f2 │ default     │ ansible          │ prometheus-ha │ false   │ false
   prometheus-ha-f3 │ default     │ ansible          │ prometheus-ha │ false   │ false

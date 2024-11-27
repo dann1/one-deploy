@@ -135,32 +135,6 @@ all:
     one_version: '6.10'
 ```
 
-## Sunstone UI
-
-The Sunstone Server can be deployed as a SystemD service (`opennebula-sunstone`) or, for improved performance, on top of the [Phusion Passenger](https://www.phusionpassenger.com/docs/tutorials/what_is_passenger/) Apache2 module. For more information about this integration, please see the [documentation](https://docs.opennebula.io/stable/installation_and_configuration/large-scale_deployment/sunstone_for_large_deployments.html). Apache2 is not configured by default, you can enable it by defining few inventory variables:
-
-```yaml
-all:
-  vars:
-    features:
-      # Enable Passenger/Apache2 integration.
-      passenger: true
-    apache2_http:
-      # Do NOT manage (or deploy) plain HTTP Apache2 VHOST.
-      managed: false
-    apache2_https:
-      # Do manage and deploy HTTPS Apache2 VHOST.
-      managed: true
-      # NOTE: The key and certchain vars should point to existing and valid PEM files.
-      key: /etc/ssl/private/opennebula-key.pem
-      certchain: /etc/ssl/certs/opennebula-certchain.pem
-    # Access your instance at https://myone.example.org.
-    one_fqdn: myone.example.org
-```
-
-> [!NOTE]
-> When Passenger integration is enabled, the `opennebula-sunstone` SystemD service is automatically stopped and disabled.
-
 ## Using Your Enterprise Edition
 
 You can use your enterprise distribution with the Ansible playbooks. Simply add your token to the var file:

@@ -12,7 +12,6 @@ The five APT/DNF repositories used by `one-deploy` are:
 - [Free Range Routing (DEB)](https://deb.frrouting.org/) / [Free Range Routing (RPM)](https://rpm.frrouting.org/)
 - [Grafana (DEB)](https://apt.grafana.com/) / [Grafana (RPM)](https://rpm.grafana.com/)
 - [OpenNebula (CE)](https://downloads.opennebula.io/repo/) / [OpenNebula (EE)](https://enterprise.opennebula.io/repo/)
-- [Passenger (DEB)](https://oss-binaries.phusionpassenger.com/apt/passenger/) / [Passenger (RPM)](https://oss-binaries.phusionpassenger.com/yum/passenger/el/)
 
 An example inventory configuration for the base OpenNebula repository would look like this:
 
